@@ -145,6 +145,9 @@ namespace bmgi {
     abstract class Constructie <<Objecttype>> {
     }
 
+    abstract class BewegendObject <<Objecttype>> {
+    }
+
 }
 
 @enduml
