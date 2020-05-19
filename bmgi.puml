@@ -29,17 +29,18 @@ namespace bmgi {
     GeoObject <|-- ReëelObject
     GeoObject <|-- VirtueelObject
     ReëelObject <|-- FysiekObject
-    FysiekObject <|-- Water
-    FysiekObject <|-- Grond
+    FysiekObject <|-- Maaiveld
+    Maaiveld <|-- Water
+    Maaiveld <|-- Land
     Inrichtingselement <|-- Constructie
-    Grond <|-- Terrein
-    Grond <|-- Verharding
+    Land <|-- Terrein
+    Land <|-- Verharding
     Constructie <|-- Gebouw
-''     Grond <|-- Gebouwdeel
+''     Land <|-- Gebouwdeel
     Inrichtingselement <|-- Leiding
-''     Grond <|-- Leidingelement
+''     Land <|-- Leidingelement
     Constructie <|-- Kunstwerk
-''     Grond <|-- Kunstwerkdeel
+''     Land <|-- Kunstwerkdeel
     FysiekObject <|-- Inrichtingselement
     Inrichtingselement <|-- Vegetatie
     Constructie <|-- AndereConstructie
@@ -68,7 +69,7 @@ namespace bmgi {
         Objecttypen gekenmerkt door hun materiële samenstelling en getypeerd naar hun topografische hoedanigheid.
     }
 
-    abstract class Grond <<Objecttype>> {
+    abstract class Land <<Objecttype>> {
     }
 
     abstract class Water <<Objecttype>> {
