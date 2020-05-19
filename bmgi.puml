@@ -54,6 +54,7 @@ namespace bmgi {
 
 ''     FunctioneelObject <|-- Etc
     FunctioneelObject <|-- Transport
+    FunctioneelObject <|-- Waterberging
 ''     Transport <|-- Weg
 ''     Transport <|-- Spoorbaan
 ''     Transport <|-- Vaarwater
@@ -127,6 +128,9 @@ namespace bmgi {
 ''     }
 
     abstract class Vegetatie <<Objecttype>> {
+    }
+
+    abstract class Waterberging <<Objecttype>> {
     }
 
     abstract class FunctioneelObject <<Objecttype>> {
