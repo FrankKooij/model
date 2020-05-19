@@ -26,34 +26,37 @@ namespace bmgi {
 
 ''     note "obv BMGI van 26 maart 2020" as bmgiversie
 
-    GeoObject <|-- FysiekObject
+    GeoObject <|-- ReëelObject
+    GeoObject <|-- VirtueelObject
+    ReëelObject <|-- FysiekObject
     FysiekObject <|-- Water
-    FysiekObject <|-- Land
+    FysiekObject <|-- Grond
     Inrichtingselement <|-- Constructie
-    Land <|-- Terrein
-    Land <|-- Verharding
+    Grond <|-- Terrein
+    Grond <|-- Verharding
     Constructie <|-- Gebouw
-''     Land <|-- Gebouwdeel
+''     Grond <|-- Gebouwdeel
     Inrichtingselement <|-- Leiding
-''     Land <|-- Leidingelement
+''     Grond <|-- Leidingelement
     Constructie <|-- Kunstwerk
-''     Land <|-- Kunstwerkdeel
+''     Grond <|-- Kunstwerkdeel
     FysiekObject <|-- Inrichtingselement
     Inrichtingselement <|-- Vegetatie
+    Constructie <|-- AndereConstructie
 
-    GeoObject <|-- FunctioneelObject
+    VirtueelObject <|-- FunctioneelObject
 
-    GeoObject <|-- AdministratiefObject
+    VirtueelObject <|-- AdministratiefObject
     AdministratiefObject <|-- GeografischGebied
     AdministratiefObject <|-- PlanologischGebied
     AdministratiefObject <|-- RegistratiefGebied
 
 ''     FunctioneelObject <|-- Etc
-    FunctioneelObject <|-- Verbinding
-''     Verbinding <|-- Weg
-''     Verbinding <|-- Spoorbaan
-''     Verbinding <|-- Vaarwater
-''     Verbinding <|-- Luchtverkeerweg
+    FunctioneelObject <|-- Transport
+''     Transport <|-- Weg
+''     Transport <|-- Spoorbaan
+''     Transport <|-- Vaarwater
+''     Transport <|-- Luchtverkeerweg
 
     abstract class GeoObject <<Objecttype>> {
         + identificatie
@@ -65,7 +68,7 @@ namespace bmgi {
         Objecttypen gekenmerkt door hun materiële samenstelling en getypeerd naar hun topografische hoedanigheid.
     }
 
-    abstract class Land <<Objecttype>> {
+    abstract class Grond <<Objecttype>> {
     }
 
     abstract class Water <<Objecttype>> {
@@ -139,13 +142,16 @@ namespace bmgi {
         Niet-tastbaar begrensd gebied waaraan een middels regels en beleid bepaalde (toekomstige) functionele en/of bestuurlijke ruimtelijke ontwikkeling is gekoppeld.
     }
 
-    abstract class Verbinding <<Objecttype>> {
+    abstract class Transport <<Objecttype>> {
     }
 
     abstract class Constructie <<Objecttype>> {
     }
 
     abstract class BewegendObject <<Objecttype>> {
+    }
+
+    abstract class AndereConstructie <<Objecttype>> {
     }
 
 }
