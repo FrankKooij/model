@@ -72,6 +72,12 @@ namespace bmgi {
     abstract class Land <<Objecttype>> {
     }
 
+    abstract class ReëelObject <<Objecttype>> {
+    }
+
+    abstract class VirtueelObject <<Objecttype>> {
+    }
+
     abstract class Water <<Objecttype>> {
         Grondoppervlak permanent bedekt met water.
     }
