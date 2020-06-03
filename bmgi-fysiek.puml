@@ -36,10 +36,10 @@ namespace bmgi-fysiek {
 
     Inrichtingselement <|-- Gebouw
     Inrichtingselement <|-- Kunstwerk
-    Inrichtingselement <|-- Terrein
     Inrichtingselement <|-- Verharding
     Inrichtingselement <|-- Vegetatie
     Inrichtingselement <|-- Leiding
+    Inrichtingselement <|-- Etc
 
     abstract class FysiekObject <<Objecttype>> {
         Objecttypen gekenmerkt door hun materiële samenstelling en getypeerd naar hun topografische hoedanigheid.
@@ -52,8 +52,7 @@ namespace bmgi-fysiek {
         Grondoppervlak permanent bedekt met water.
     }
 
-    abstract class Terrein <<Objecttype>> {
-        Op basis van type begroeiing, beplanting, natuurlijk voorkomen of morfologische aspecten getypeerd stuk aardoppervlak.
+    abstract class Etc <<Objecttype>> {
     }
 
     abstract class Verharding <<Objecttype>> {
