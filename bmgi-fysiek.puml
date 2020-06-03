@@ -31,13 +31,12 @@ namespace bmgi-fysiek {
     FysiekObject <|-- MaaiveldWaterspiegel
     FysiekObject <|-- Inrichtingselement
 
-    MaaiveldWaterspiegel <|-- Water
     MaaiveldWaterspiegel <|-- Land
+    MaaiveldWaterspiegel <|-- Water
 
     Inrichtingselement <|-- Gebouw
     Inrichtingselement <|-- Verharding
     Inrichtingselement <|-- Vegetatie
-    Inrichtingselement <|-- Leiding
     Inrichtingselement <|-- Etc
 
     abstract class FysiekObject <<Objecttype>> {
@@ -60,10 +59,6 @@ namespace bmgi-fysiek {
 
     abstract class Gebouw <<Objecttype>> {
         Bouwwerk, dat een voor mensen toegankelijke overdekte, geheel of gedeeltelijk met wanden omsloten, ruimte vormt.
-    }
-
-    abstract class Leiding <<Objecttype>> {
-        Een geheel van geleiders of ruimte welke voorzien zijn van één ommanteling en bestemd is voor transport van materie, data of energie.
     }
 
     abstract class Inrichtingselement <<Objecttype>> {
