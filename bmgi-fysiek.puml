@@ -100,29 +100,6 @@ namespace bmgi {
     abstract class Vegetatie <<Objecttype>> {
     }
 
-    abstract class Waterberging <<Objecttype>> {
-    }
-
-    abstract class FunctioneelObject <<Objecttype>> {
-        Objecttypen die de ruimte indelen naar functies die er gerealiseerd worden.
-    }
-
-    abstract class AdministratiefObject <<Objecttype>> {
-        Objecttypen die de ruimte indelen op basis van administratieve indeling.
-    }
-
-    abstract class RegistratiefGebied <<Objecttype>> {
-        Op basis van wet- of regelgeving afgebakend gebied dat als eenheid geldt van politiek/bestuurlijke verantwoordelijkheid of voor bedrijfsvoering.
-    }
-
-    abstract class GeografischGebied <<Objecttype>> {
-        Geografisch benoemd of aangeduid gebied.
-    }
-
-    abstract class PlanologischGebied <<Objecttype>> {
-        Niet-tastbaar begrensd gebied waaraan een middels regels en beleid bepaalde (toekomstige) functionele en/of bestuurlijke ruimtelijke ontwikkeling is gekoppeld.
-    }
-
     abstract class Constructie <<Objecttype>> {
     }
 
