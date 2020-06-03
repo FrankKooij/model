@@ -35,7 +35,6 @@ namespace bmgi-fysiek {
     Maaiveld <|-- Land
 
     Inrichtingselement <|-- Gebouw
-    Inrichtingselement <|-- Kunstwerk
     Inrichtingselement <|-- Verharding
     Inrichtingselement <|-- Vegetatie
     Inrichtingselement <|-- Leiding
@@ -65,10 +64,6 @@ namespace bmgi-fysiek {
 
     abstract class Leiding <<Objecttype>> {
         Een geheel van geleiders of ruimte welke voorzien zijn van één ommanteling en bestemd is voor transport van materie, data of energie.
-    }
-
-    abstract class Kunstwerk <<Objecttype>> {
-        Civiel-technisch werk voor de infrastructuur van wegen, water, spoorbanen, waterkeringen en/of leidingen en niet bedoeld voor permanent menselijk verblijf.
     }
 
     abstract class Inrichtingselement <<Objecttype>> {
