@@ -1,0 +1,134 @@
+@startuml
+
+!include https://raw.githubusercontent.com/FrankKooij/model/master/opmaak.iuml
+
+hide circle
+
+hide empty members
+
+hide stereotype
+
+hide <<enumeration>>
+
+hide attributes
+
+hide methods
+
+'' -------------------------------------------------------------------------------------------------
+
+'' hide AbstractObject
+
+'' =================================================================================================
+
+'' title Concept-BMGI
+
+namespace bmgi {
+
+''     note "obv BMGI van 26 maart 2020" as bmgiversie
+
+    FysiekObject <|-- Maaiveld
+    Maaiveld <|-- Water
+    Maaiveld <|-- Land
+    Inrichtingselement <|-- Constructie
+    Land <|-- Terrein
+    Land <|-- Verharding
+    Constructie <|-- Gebouw
+''     Land <|-- Gebouwdeel
+    Inrichtingselement <|-- Leiding
+''     Land <|-- Leidingelement
+    Constructie <|-- Kunstwerk
+''     Land <|-- Kunstwerkdeel
+    FysiekObject <|-- Inrichtingselement
+    Inrichtingselement <|-- Vegetatie
+    Constructie <|-- AndereConstructie
+
+    abstract class FysiekObject <<Objecttype>> {
+        Objecttypen gekenmerkt door hun materiële samenstelling en getypeerd naar hun topografische hoedanigheid.
+    }
+
+    abstract class Land <<Objecttype>> {
+    }
+
+    abstract class Water <<Objecttype>> {
+        Grondoppervlak permanent bedekt met water.
+    }
+
+    abstract class Terrein <<Objecttype>> {
+        Op basis van type begroeiing, beplanting, natuurlijk voorkomen of morfologische aspecten getypeerd stuk aardoppervlak.
+    }
+
+    abstract class Verharding <<Objecttype>> {
+        In één of meer lagen aangelegd materiaal, welke zijn gelegd over een ondergrond of onderliggende constructie, aangelegd om een oppervlakte geschikt te maken voor het beoogde gebruik , door te egaliseren, te verstevigen en/of te verruwen.
+    }
+
+''     abstract class Spoorbaan <<Objecttype>> {
+''         Gebaand gedeelte (van het terrein) voor het verkeer over rails (trein, tram, sneltram, kraan).
+''     }
+
+    abstract class Gebouw <<Objecttype>> {
+        Bouwwerk, dat een voor mensen toegankelijke overdekte, geheel of gedeeltelijk met wanden omsloten, ruimte vormt.
+    }
+
+''     abstract class Gebouwdeel <<Objecttype>> {
+''         Gedeelte van een bouwwerk, dat een voor mensen toegankelijke overdekte, geheel of gedeeltelijk met wanden omsloten, ruimte vormt.
+''     }
+
+    abstract class Leiding <<Objecttype>> {
+        Een geheel van geleiders of ruimte welke voorzien zijn van één ommanteling en bestemd is voor transport van materie, data of energie.
+    }
+
+''     abstract class Leidingelement <<Objecttype>> {
+''         Een knooppunt van één of meer leidingen of een installatie, op een specifieke plek gekoppeld aan de leiding, bedoeld voor het regelen van het transport van materie, data of energie.
+''     }
+
+    abstract class Kunstwerk <<Objecttype>> {
+        Civiel-technisch werk voor de infrastructuur van wegen, water, spoorbanen, waterkeringen en/of leidingen en niet bedoeld voor permanent menselijk verblijf.
+    }
+
+''     abstract class Kunstwerkdeel <<Objecttype>> {
+''         Onderdeel van een kunstwerk wat bijdraagt aan de constructie of de functies die de constructie moet realiseren.
+''     }
+
+    abstract class Inrichtingselement <<Objecttype>> {
+        Ruimtelijk object ter detaillering dan wel ter inrichting van de overige benoemde ruimtelijke objecten of een ander inrichtingselement.
+    }
+
+''     abstract class OverigeConstructie <<Objecttype>> {
+''         Bouwkundige constructie die niet onder een ander fysiek objecttype valt.
+''     }
+
+    abstract class Vegetatie <<Objecttype>> {
+    }
+
+    abstract class Waterberging <<Objecttype>> {
+    }
+
+    abstract class FunctioneelObject <<Objecttype>> {
+        Objecttypen die de ruimte indelen naar functies die er gerealiseerd worden.
+    }
+
+    abstract class AdministratiefObject <<Objecttype>> {
+        Objecttypen die de ruimte indelen op basis van administratieve indeling.
+    }
+
+    abstract class RegistratiefGebied <<Objecttype>> {
+        Op basis van wet- of regelgeving afgebakend gebied dat als eenheid geldt van politiek/bestuurlijke verantwoordelijkheid of voor bedrijfsvoering.
+    }
+
+    abstract class GeografischGebied <<Objecttype>> {
+        Geografisch benoemd of aangeduid gebied.
+    }
+
+    abstract class PlanologischGebied <<Objecttype>> {
+        Niet-tastbaar begrensd gebied waaraan een middels regels en beleid bepaalde (toekomstige) functionele en/of bestuurlijke ruimtelijke ontwikkeling is gekoppeld.
+    }
+
+    abstract class Constructie <<Objecttype>> {
+    }
+
+    abstract class AndereConstructie <<Objecttype>> {
+    }
+
+}
+
+@enduml
