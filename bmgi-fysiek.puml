@@ -34,15 +34,12 @@ namespace bmgi-fysiek {
     Maaiveld <|-- Water
     Maaiveld <|-- Land
 
-    Inrichtingselement <|-- Constructie
+    Inrichtingselement <|-- Gebouw
+    Inrichtingselement <|-- Kunstwerk
     Inrichtingselement <|-- Terrein
     Inrichtingselement <|-- Verharding
     Inrichtingselement <|-- Vegetatie
     Inrichtingselement <|-- Leiding
-
-    Constructie <|-- Gebouw
-    Constructie <|-- Kunstwerk
-    Constructie <|-- AndereConstructie
 
     abstract class FysiekObject <<Objecttype>> {
         Objecttypen gekenmerkt door hun materiële samenstelling en getypeerd naar hun topografische hoedanigheid.
@@ -63,52 +60,26 @@ namespace bmgi-fysiek {
         In één of meer lagen aangelegd materiaal, welke zijn gelegd over een ondergrond of onderliggende constructie, aangelegd om een oppervlakte geschikt te maken voor het beoogde gebruik , door te egaliseren, te verstevigen en/of te verruwen.
     }
 
-''     abstract class Spoorbaan <<Objecttype>> {
-''         Gebaand gedeelte (van het terrein) voor het verkeer over rails (trein, tram, sneltram, kraan).
-''     }
-
     abstract class Gebouw <<Objecttype>> {
         Bouwwerk, dat een voor mensen toegankelijke overdekte, geheel of gedeeltelijk met wanden omsloten, ruimte vormt.
     }
-
-''     abstract class Gebouwdeel <<Objecttype>> {
-''         Gedeelte van een bouwwerk, dat een voor mensen toegankelijke overdekte, geheel of gedeeltelijk met wanden omsloten, ruimte vormt.
-''     }
 
     abstract class Leiding <<Objecttype>> {
         Een geheel van geleiders of ruimte welke voorzien zijn van één ommanteling en bestemd is voor transport van materie, data of energie.
     }
 
-''     abstract class Leidingelement <<Objecttype>> {
-''         Een knooppunt van één of meer leidingen of een installatie, op een specifieke plek gekoppeld aan de leiding, bedoeld voor het regelen van het transport van materie, data of energie.
-''     }
-
     abstract class Kunstwerk <<Objecttype>> {
         Civiel-technisch werk voor de infrastructuur van wegen, water, spoorbanen, waterkeringen en/of leidingen en niet bedoeld voor permanent menselijk verblijf.
     }
-
-''     abstract class Kunstwerkdeel <<Objecttype>> {
-''         Onderdeel van een kunstwerk wat bijdraagt aan de constructie of de functies die de constructie moet realiseren.
-''     }
 
     abstract class Inrichtingselement <<Objecttype>> {
         Ruimtelijk object ter detaillering dan wel ter inrichting van de overige benoemde ruimtelijke objecten of een ander inrichtingselement.
     }
 
-''     abstract class OverigeConstructie <<Objecttype>> {
-''         Bouwkundige constructie die niet onder een ander fysiek objecttype valt.
-''     }
-
     abstract class Vegetatie <<Objecttype>> {
     }
 
     abstract class Maaiveld <<Objecttype>> {
-    }
-
-    abstract class Constructie <<Objecttype>> {
-    }
-
-    abstract class AndereConstructie <<Objecttype>> {
     }
 
 }
