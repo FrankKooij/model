@@ -33,7 +33,6 @@ namespace bmgi-fysiek {
 
     Maaiveld <|-- Water
     Maaiveld <|-- Land
-    Maaiveld <|-- DigitaalTerreinmodel
 
     Inrichtingselement <|-- Constructie
     Inrichtingselement <|-- Terrein
