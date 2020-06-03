@@ -24,24 +24,25 @@ hide namespace
 
 '' title Concept-BMGI
 
-namespace bmgi {
+namespace bmgi-fysiek {
 
 ''     note "obv BMGI van 26 maart 2020" as bmgiversie
 
     FysiekObject <|-- Maaiveld
+    FysiekObject <|-- Inrichtingselement
+
     Maaiveld <|-- Water
     Maaiveld <|-- Land
+    Maaiveld <|-- DigitaalTerreinmodel
+
     Inrichtingselement <|-- Constructie
-    Land <|-- Terrein
-    Land <|-- Verharding
-    Constructie <|-- Gebouw
-''     Land <|-- Gebouwdeel
-    Inrichtingselement <|-- Leiding
-''     Land <|-- Leidingelement
-    Constructie <|-- Kunstwerk
-''     Land <|-- Kunstwerkdeel
-    FysiekObject <|-- Inrichtingselement
+    Inrichtingselement <|-- Terrein
+    Inrichtingselement <|-- Verharding
     Inrichtingselement <|-- Vegetatie
+    Inrichtingselement <|-- Leiding
+
+    Constructie <|-- Gebouw
+    Constructie <|-- Kunstwerk
     Constructie <|-- AndereConstructie
 
     abstract class FysiekObject <<Objecttype>> {
@@ -100,6 +101,9 @@ namespace bmgi {
 ''     }
 
     abstract class Vegetatie <<Objecttype>> {
+    }
+
+    abstract class Maaiveld <<Objecttype>> {
     }
 
     abstract class Constructie <<Objecttype>> {
