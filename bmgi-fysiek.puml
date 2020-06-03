@@ -28,11 +28,11 @@ namespace bmgi-fysiek {
 
 ''     note "obv BMGI van 26 maart 2020" as bmgiversie
 
-    FysiekObject <|-- Maaiveld
+    FysiekObject <|-- MaaiveldWaterspiegel
     FysiekObject <|-- Inrichtingselement
 
-    Maaiveld <|-- Water
-    Maaiveld <|-- Land
+    MaaiveldWaterspiegel <|-- Water
+    MaaiveldWaterspiegel <|-- Land
 
     Inrichtingselement <|-- Gebouw
     Inrichtingselement <|-- Verharding
@@ -73,7 +73,7 @@ namespace bmgi-fysiek {
     abstract class Vegetatie <<Objecttype>> {
     }
 
-    abstract class Maaiveld <<Objecttype>> {
+    abstract class MaaiveldWaterspiegel <<Objecttype>> {
     }
 
 }
