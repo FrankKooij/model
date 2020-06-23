@@ -1,110 +1,6 @@
 @startuml
 
-' --------v-v-v-v-v-v-v-v--------
-' https://www.rijkshuisstijl.nl/organisatiespecifieke-richtlijnen/ministerie-van-binnenlandse-zaken-en-koninkrijksrelaties/deelidentiteit-kerndepartement-bzk
-' https://www.rijkshuisstijl.nl/basiselementen/basiselementen-online/online-kleuren
-'
-' # Communicatiekleuren van BZK
-' Het kerndepartement van BZK heeft uit het kleurenpalet van de rijkshuisstijl drie kleuren (elk met tint1 / tint2) gekozen:
-' - Rijksoverheid hemelblauw #007bc7 (#b2d7ee/#d9ebf7)
-' - Rijksoverheid rood #d52b1e (#f2bfbb/#f9dfdd)
-' - Rijksoverheid groen #39870c (#c3dbb6/#e1eddb)
-' Het gebruik van deze kleuren in combinatie met veel wit wordt gestimuleerd.
-'
-' # Tinten voor achtergrondkaders, grafieken en tabellen
-' Voor achtergrondkaders, grafieken en tabellen kunnen 7 neutrale grijstinten of tinten van een communicatiekleur in stappen van 20% worden toegepast. Voor tekstachtergrond wordt grijstint1 of communicatiekleur tint2 aanbevolen om aan de contrasteisen voor een goede leesbaarheid te voldoen.
-' - Rijksoverheid grijs 1 #f3f3f3
-' - Rijksoverheid grijs 2 #e6e6e6
-' - Rijksoverheid grijs 3 #cccccc
-' - Rijksoverheid grijs 4 #b4b4b4
-' - Rijksoverheid grijs 5 #999999
-' - Rijksoverheid grijs 6 #696969
-' - Rijksoverheid grijs 7 #535353
-'
-' # Online communicatiekleuren
-' - Rijksoverheid paars        #42145f (#c6b8cf/#e3dce7)
-' - Rijksoverheid violet       #a90061 (#e5b2cf/#f2d9e7)
-' - Rijksoverheid robijnrood   #ca005d (#efb2ce/#f7d9e7)
-' - Rijksoverheid roze         #f092cd (#fadef0/#fdeff8)
-' - Rijksoverheid rood         #d52b1e (#f2bfbb/#f9dfdd)
-' - Rijksoverheid oranje       #e17000 (#f6d4b2/#fbead9)
-' - Rijksoverheid donkergeel   #ffb612 (#ffe9b7/#fff4dc)
-' - Rijksoverheid geel         #f9e11e (#fdf6bb/#fefbdd)
-' - Rijksoverheid donkerbruin  #673327 (#d1c1be/#e8e1df)
-' - Rijksoverheid bruin        #94710a (#dfd4b5/#efeada)
-' - Rijksoverheid donkergroen  #275937 (#becdc3/#dfe6e1)
-' - Rijksoverheid groen        #39870c (#c3dbb6/#e1eddb)
-' - Rijksoverheid mosgroen     #777c00 (#d6d7b2/#ebebd9)
-' - Rijksoverheid mintgroen    #76d2b6 (#d6f1e9/#ebf8f4)
-' - Rijksoverheid donkerblauw  #01689b (#cce0f1/#e5f0f9)
-' - Rijksoverheid hemelblauw   #007bc7 (#b2d7ee/#d9ebf7)
-' - Rijksoverheid lichtblauw   #8fcae7 (#ddeff8/#eef7fb)
-
-' --------^-^-^-^-^-^-^-^--------
-
-skinparam defaultFontColor black
-skinparam defaultFontName Lucida Sans
-skinparam defaultFontSize 11
-skinparam defaultFontStyle normal
-skinparam defaultMonospacedFontName Lucida Sans Typewriter
-' skinparam defaultTextAlignment left
-' skinparam lineType ortho
-' skinparam lineType polyline
-skinparam shadowing false
-skinparam wrapWidth 165
-
-skinparam class {
-    ArrowColor #39870c
-    ArrowFontSize 10
-'     ArrowTextAlignment center
-    ArrowThickness 1.5
-'     AttributeFontColor #000000
-    AttributeIconSize 0
-    BackgroundColor #ffffff
-    BorderColor #007bc7
-    BorderThickness 2.5
-    FontColor #007bc7
-    FontSize 12
-    FontStyle bold
-'     StereotypeFontStyle italic
-'     StereotypeFontColor #000000
-}
-
-skinparam class<<extern>> {
-    AttributeFontColor #b4b4b4
-    BorderColor #b4b4b4
-    FontColor #b4b4b4
-    StereotypeFontColor #b4b4b4
-}
-
-skinparam class<<vrijwillig>> {
-    BorderThickness 1
-    FontStyle normal
-    RoundCorner 25
-}
-
-skinparam note {
-    BackgroundColor #fdeff8
-    BorderColor #fadef0
-    FontColor #01689b
-}
-
-skinparam package {
-    BackgroundColor #f3f3f3
-    BorderColor #d52b1e
-    FontColor #d52b1e
-    FontSize 12
-    FontStyle bold
-    Style rectangle
-}
-
-skinparam package<<subpackage>> {
-    BackgroundColor #e6e6e6
-    BorderColor #e6e6e6
-    FontStyle normal
-}
-
-' -------------------------------------------------------------------------------------------------
+!include https://raw.githubusercontent.com/FrankKooij/model/master/opmaak.iuml
 
 hide circle
 
@@ -112,24 +8,28 @@ hide empty members
 
 hide stereotype
 
-' hide attributes
+hide <<enumeration>>
 
-' hide methods
+'' hide attributes
 
-' -------------------------------------------------------------------------------------------------
+'' hide methods
 
-' Maak van deze instructie commentaarregels om de impactkleuring te verbergen:
+hide namespace
+
+'' -------------------------------------------------------------------------------------------------
+
+'' hide AbstractObject
+
+'' Maak van deze instructie commentaarregels om de impactkleuring te verbergen:
 skinparam class {
     BackgroundColor<<impactlaag>> #e1eddb
     BackgroundColor<<impactmiddel>> #fefbdd
     BackgroundColor<<impacthoog>> #f9dfdd
 }
 
-' hide AbstractObject
+'' =================================================================================================
 
-' =================================================================================================
-
-' title Informatiemodel van de praktijkhandleiding
+'' title Conceptueel informatiemodel van de praktijkhandleiding
 
 Theme "1" --> "*" Subtheme : has >
 Collection "1" --> "*" Page : includes >
