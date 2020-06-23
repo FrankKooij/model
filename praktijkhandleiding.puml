@@ -10,7 +10,7 @@ hide stereotype
 
 hide <<enumeration>>
 
-'' hide attributes
+hide attributes
 
 '' hide methods
 
@@ -41,11 +41,49 @@ Collection <|-- Theme
 Collection <|-- Subtheme
 TagName "1" ..> "1" Collection : is\naffiliated\nwith >
 PageLayout "1" ..> "0..1" Collection : applies\nexclusively\nto >
+site.config "1" <-- "*" site.collection
+
+namespace site {
+    namespace site.page {
+        site.layout <|-- site.page.layout
+    }
+}
+
+class site.config <<Gestructureerd datatype>> {
+    + date: yyyy-mm-dd [0..1]
+    + description [0..1]
+    + editor [0..1]
+    + layout: PageLayout [1..1]
+    + mermaid: Boolean [0..1]
+    + sorteercode [0..1]
+    + sorteren: SortOrder [0..1]
+    + title [1..1]
+    + weergevenalsdatumontbreekt: Boolean [0..1]
+    --
+    _config.yml
+}
+
+class site.collection <<Objecttype>> {
+    + output: Boolean
+    + zoeken: Boolean
+    + taglists: Boolean
+    + datums: Boolean
+    + origin [0..1]
+    + alias [0..1]
+    --
+    _config.yml
+}
+
+class site.layout <<Objecttype>> {
+}
+
+class site.page.layout <<Objecttype>> {
+}
 
 abstract class Theme <<Objecttype>> {
 }
 
-class FrontMatter <<Objecttype>> {
+abstract class page.FrontMatter <<Gestructureerd datatype>> {
     + date: yyyy-mm-dd [0..1]
     + description [0..1]
     + editor [0..1]
@@ -59,7 +97,7 @@ class FrontMatter <<Objecttype>> {
     YAML front matter.
 }
 
-class Page <<Objecttype>> {
+class site.Page <<Objecttype>> {
     + content [1..1]
     + frontMatter: FrontMatter [1..1]
     --
