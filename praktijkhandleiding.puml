@@ -6,11 +6,11 @@ hide circle
 
 hide empty members
 
-hide stereotype
+'' hide stereotype
 
 hide <<enumeration>>
 
-hide attributes
+'' hide attributes
 
 '' hide methods
 
@@ -27,82 +27,78 @@ skinparam class {
     BackgroundColor<<impacthoog>> #f9dfdd
 }
 
+skinparam wrapWidth 300
+
 '' =================================================================================================
 
 '' title Conceptueel informatiemodel van de praktijkhandleiding
 
-Theme "1" --> "*" Subtheme : has >
-Collection "1" --> "*" Page : includes >
-FrontMatter "*" -- "*" Tags : includes >
-FrontMatter "1" -- "0..1" Toc : includes >
-Tags "*" --> "+tagValue 1" Page : refers\nto >
+Theme "1" --> "*" Subtheme
+Collection "1" *-- "*" Page
+TagCollection "*" <-- "*" Page
+TagCollection "1" *-- "*" Tag
+Tag "*" <-- "*" Page
+Tag "0..1" *-- "1" Page
 Theme <|-- Trefwoorden
 Collection <|-- Theme
 Collection <|-- Subtheme
-TagName "1" ..> "1" Collection : is\naffiliated\nwith >
-PageLayout "1" ..> "0..1" Collection : applies\nexclusively\nto >
-site.config "1" <-- "*" site.collection
+Site "1" -- "*" Collection
+Site "1" -- "1" Config
+Site "1" .. "*" Page
 
-namespace site {
-    namespace site.page {
-        site.layout <|-- site.page.layout
-    }
+abstract class Site <<Objecttype>> {
+    + config: Config [1..1]
 }
 
-class site.config <<Gestructureerd datatype>> {
-    + date: yyyy-mm-dd [0..1]
-    + description [0..1]
-    + editor [0..1]
-    + layout: PageLayout [1..1]
-    + mermaid: Boolean [0..1]
-    + sorteercode [0..1]
-    + sorteren: SortOrder [0..1]
-    + title [1..1]
-    + weergevenalsdatumontbreekt: Boolean [0..1]
+class Config <<Gestructureerd datatype>> {
     --
     _config.yml
 }
 
-class site.collection <<Objecttype>> {
-    + output: Boolean
-    + zoeken: Boolean
-    + taglists: Boolean
-    + datums: Boolean
-    + origin [0..1]
+class Collection <<Objecttype>> {
+    + name [1..1]
     + alias [0..1]
-    --
-    _config.yml
+    + datums: Boolean [1..1]
+    + origin [0..1]
+    + output: Boolean [1..1]
+    + taglists: Boolean [1..1]
+    + zoeken: Boolean [1..1]
 }
 
-class site.layout <<Objecttype>> {
-}
-
-class site.page.layout <<Objecttype>> {
+class Layout <<Objecttype>> {
+--
+Alias of the script that generates the body of the web page.
 }
 
 abstract class Theme <<Objecttype>> {
 }
 
-abstract class page.FrontMatter <<Gestructureerd datatype>> {
+Page "1" --> "1" Layout
+
+Page "*" --> "1" Theme
+
+Page "1" --> "0..1" Toc
+
+'' Page::toc "1" -> "1" Page::content
+
+class Page <<Objecttype>> {
+    + attribuut [0..*]
+    + content [1..1]
     + date: yyyy-mm-dd [0..1]
     + description [0..1]
     + editor [0..1]
-    + layout: PageLayout [1..1]
     + mermaid: Boolean [0..1]
+    + objecttype [0..*]
     + sorteercode [0..1]
     + sorteren: SortOrder [0..1]
+    + toc [0..*]
     + title [1..1]
     + weergevenalsdatumontbreekt: Boolean [0..1]
     --
-    YAML front matter.
-}
-
-class site.Page <<Objecttype>> {
-    + content [1..1]
-    + frontMatter: FrontMatter [1..1]
+    The body text of the web page (in Kramdown) with YAML front matter.
+''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
     --
-    The body text of the web page (in Kramdown).
-''    De romptekst van de webpagina (in Kramdown).
+    SortOrder hoort thuis bij collection?
 }
 
 abstract class Subtheme <<Objecttype>> {
@@ -114,40 +110,23 @@ class Toc <<Objecttype>> {
     Een al dan niet volledige lijst van letterlijk overgenomen hoofdstuk- en paragraaftitels uit de content, op basis waarvan een navigeerbare inhoudsopgave wordt getoond in het websitemenu.
 }
 
-abstract class Collection <<Objecttype>> {
-    --
-    Definitie.
+abstract class TagCollection <<Objecttype>> {
 }
 
-abstract class Tags <<Objecttype>> {
-    + tagClass: TagClass [1..1]
-    + tagValue [0..*]
-    --
-    Definitie.
+TagCollection "1" -- "1" Collection
+
+abstract class Tag <<Objecttype>> {
+    + name [1..1]
 }
 
 class Trefwoorden <<Objecttype>> {
     Een voorbeeldthema.
 }
 
-class TagClass << Referentielijst >> {
-    + trefwoorden
-    }
-
 class SortOrder << Referentielijst >> {
     + alfabetisch
     + chronologisch
     + sorteercode
-}
-
-class PageLayout << Referentielijst >> {
-    + default
-    + page
-    ..
-    + trefwoord
-    --
-    Alias for the script file that generates the body of the web page.
-''    Naam van het bestand met de programmacode voor de romptekst van de webpagina.
 }
 
 @enduml
