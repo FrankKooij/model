@@ -64,7 +64,7 @@ class Page <<Objecttype>> {
     + frontMatter: FrontMatter [1..1]
     --
     The body text of the web page (in Kramdown).
-'    De romptekst van de webpagina (in Kramdown).
+''    De romptekst van de webpagina (in Kramdown).
 }
 
 abstract class Subtheme <<Objecttype>> {
@@ -109,7 +109,7 @@ class PageLayout << Referentielijst >> {
     + trefwoord
     --
     Alias for the script file that generates the body of the web page.
-'    Naam van het bestand met de programmacode voor de romptekst van de webpagina.
+''    Naam van het bestand met de programmacode voor de romptekst van de webpagina.
 }
 
 @enduml
