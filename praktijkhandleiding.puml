@@ -97,7 +97,7 @@ class Page <<Objecttype>> {
     The body text of the web page (in Kramdown) with YAML front matter.
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
     --
-    SortOrder en Layout horen thuis bij collection?
+    SortOrder en Layout horen eigenlijk thuis bij collection?
 }
 
 abstract class Subtheme <<Objecttype>> {
