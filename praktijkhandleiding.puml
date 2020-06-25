@@ -36,10 +36,11 @@ skinparam wrapWidth 300
 Theme "1" --> "*" Subtheme
 Collection "1" *-- "*" Page
 '' TagCollection "1" *-- "*" Tag
+'' Tag "*\n+ collection\n+ title" <-- "*" Page
 Tag "*" <-- "*" Page
 '' Tag "0..1" *-- "1" Page
 Tag --|> Page
-Theme <|-- Trefwoorden
+'' Theme <|-- Trefwoorden
 Collection <|-- Theme
 Collection <|-- Subtheme
 Site "1" *-- "*" Collection
@@ -81,13 +82,11 @@ Page "*" --> "1" Theme
 '' Page::toc "1" -> "1" Page::content
 
 class Page <<Objecttype>> {
-    + attribuut [0..*]
     + content [1..1]
     + date: yyyy-mm-dd [0..1]
     + description [0..1]
     + editor [0..1]
     + mermaid: Boolean [0..1]
-    + objecttype [0..*]
     + sorteercode [0..1]
     + sorteren: SortOrder [0..1]
     + title [1..1]
@@ -110,19 +109,22 @@ abstract class Subtheme <<Objecttype>> {
 ''     Selectieve lijst van letterlijk overgenomen hoofdstuk- en paragraaftitels uit de content, die samen de basis vormen voor een navigeerbare inhoudsopgave.
 '' }
 
-abstract class TagCollection <<Objecttype>> {
-}
+'' abstract class TagCollection <<Objecttype>> {
+'' }
 
-TagCollection --|> Collection
+'' TagCollection --|> Collection
 
 abstract class Tag <<Objecttype>> {
-    + name [1..1]
+''     + name [1..1]
 }
 
 class Trefwoorden <<Objecttype>> {
 }
 
-'' Attributen --|> Collection
+NamedCollection --|> Collection
+
+NamedCollection "1" *-- "*" Tag
+
 '' Beleidskaders --|> Collection
 '' Gebeurtenissen --|> Collection
 '' Modeldocumenten --|> Collection
