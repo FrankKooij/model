@@ -35,16 +35,14 @@ skinparam wrapWidth 300
 
 Theme "1" --> "*" Subtheme
 Collection "1" *-- "*" Page
-TagCollection "*" <-- "*" Page
 TagCollection "1" *-- "*" Tag
 Tag "*" <-- "*" Page
 Tag "0..1" *-- "1" Page
 Theme <|-- Trefwoorden
 Collection <|-- Theme
 Collection <|-- Subtheme
-Site "1" -- "*" Collection
-Site "1" -- "1" Config
-Site "1" .. "*" Page
+Site "1" *-- "*" Collection
+'' Site "1" .. "*" Page
 
 abstract class Site <<Objecttype>> {
     + config: Config [1..1]
@@ -55,7 +53,7 @@ class Config <<Gestructureerd datatype>> {
     _config.yml
 }
 
-class Collection <<Objecttype>> {
+abstract class Collection <<Objecttype>> {
     + name [1..1]
     + alias [0..1]
     + datums: Boolean [1..1]
@@ -73,11 +71,11 @@ Alias of the script that generates the body of the web page.
 abstract class Theme <<Objecttype>> {
 }
 
-Page "1" --> "1" Layout
+Page "*" --> "1" Layout
+
+Layout "*" -> "0..1" Layout
 
 Page "*" --> "1" Theme
-
-Page "1" --> "0..1" Toc
 
 '' Page::toc "1" -> "1" Page::content
 
@@ -91,37 +89,45 @@ class Page <<Objecttype>> {
     + objecttype [0..*]
     + sorteercode [0..1]
     + sorteren: SortOrder [0..1]
-    + toc [0..*]
     + title [1..1]
+''     + toc: Toc [0..1]
+    + toc [0..1]
     + weergevenalsdatumontbreekt: Boolean [0..1]
     --
     The body text of the web page (in Kramdown) with YAML front matter.
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
     --
-    SortOrder hoort thuis bij collection?
+    SortOrder en Layout horen thuis bij collection?
 }
 
 abstract class Subtheme <<Objecttype>> {
 }
 
-class Toc <<Objecttype>> {
-    + koptekst [1..*]
-    --
-    Een al dan niet volledige lijst van letterlijk overgenomen hoofdstuk- en paragraaftitels uit de content, op basis waarvan een navigeerbare inhoudsopgave wordt getoond in het websitemenu.
-}
+'' class Toc <<Gestructureerd datatype>> {
+''     + koptekst [1..*]
+''     --
+''     Selectieve lijst van letterlijk overgenomen hoofdstuk- en paragraaftitels uit de content, die samen de basis vormen voor een navigeerbare inhoudsopgave.
+'' }
 
 abstract class TagCollection <<Objecttype>> {
 }
 
-TagCollection "1" -- "1" Collection
+TagCollection --|> Collection
 
 abstract class Tag <<Objecttype>> {
     + name [1..1]
 }
 
 class Trefwoorden <<Objecttype>> {
-    Een voorbeeldthema.
 }
+
+'' Attributen --|> Collection
+'' Beleidskaders --|> Collection
+'' Gebeurtenissen --|> Collection
+'' Modeldocumenten --|> Collection
+'' Objecttypen --|> Collection
+'' Relaties --|> Collection
+'' Trefwoorden --|> Collection
 
 class SortOrder << Referentielijst >> {
     + alfabetisch
