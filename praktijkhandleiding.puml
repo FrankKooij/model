@@ -35,9 +35,10 @@ skinparam wrapWidth 300
 
 Theme "1" --> "*" Subtheme
 Collection "1" *-- "*" Page
-TagCollection "1" *-- "*" Tag
+'' TagCollection "1" *-- "*" Tag
 Tag "*" <-- "*" Page
-Tag "0..1" *-- "1" Page
+'' Tag "0..1" *-- "1" Page
+Tag --|> Page
 Theme <|-- Trefwoorden
 Collection <|-- Theme
 Collection <|-- Subtheme
