@@ -18,14 +18,8 @@ hide namespace
 
 '' -------------------------------------------------------------------------------------------------
 
-'' hide AbstractObject
-
-'' Maak van deze instructie commentaarregels om de impactkleuring te verbergen:
-skinparam class {
-    BackgroundColor<<impactlaag>> #e1eddb
-    BackgroundColor<<impactmiddel>> #fefbdd
-    BackgroundColor<<impacthoog>> #f9dfdd
-}
+hide <<Gestructureerd datatype>>
+hide <<Referentielijst>>
 
 skinparam wrapWidth 300
 
@@ -56,16 +50,19 @@ class Config <<Gestructureerd datatype>> {
 }
 
 abstract class Collection <<Objecttype>> {
-    + name [1..1]
-    + alias [0..1]
+    + name: CharacterString [1..1]
+    + alias: CharacterString [0..1]
     + datums: Boolean [1..1]
-    + origin [0..1]
+''    + origin [0..1]
     + output: Boolean [1..1]
     + taglists: Boolean [1..1]
     + zoeken: Boolean [1..1]
 }
 
+Collection "*" --> "+ origin\n0..1" Collection
+
 class Layout <<Objecttype>> {
+    + script [0..]
 --
 Alias of the script that generates the body of the web page.
 }
@@ -73,7 +70,7 @@ Alias of the script that generates the body of the web page.
 abstract class Theme <<Objecttype>> {
 }
 
-Page "*" --> "1" Layout
+Page "*" --> "+ file name\n1" Layout
 
 Layout "*" -> "0..1" Layout
 
@@ -81,7 +78,9 @@ Collection "0..1" -- "0..1" Layout
 
 Layout "1" -- "0..1" Theme
 
-Default -|> Layout
+Default --|> Layout
+
+Default "*" --> "0" Layout
 
 CollectionLayout -|> Layout
 
@@ -94,12 +93,12 @@ Page "*" --> "1" Theme
 class Page <<Objecttype>> {
     + content [1..1]
     + date: yyyy-mm-dd [0..1]
-    + description [0..1]
-    + editor [0..1]
+    + description: CharacterString [0..1]
+    + editor: CharacterString [0..1]
     + mermaid: Boolean [0..1]
-    + sorteercode [0..1]
+    + sorteercode: CharacterString [0..1]
     + sorteren: SortOrder [0..1]
-    + title [1..1]
+    + title: CharacterString [1..1]
 ''     + toc: Toc [0..1]
     + toc [0..1]
     + weergevenalsdatumontbreekt: Boolean [0..1]
@@ -107,18 +106,18 @@ class Page <<Objecttype>> {
     The body text of the web page (in Kramdown) with YAML front matter.
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
     --
-    SortOrder en Layout horen eigenlijk thuis bij collection?
+    SortOrder en Layout horen eigenlijk thuis bij collection
 }
 
 class Snippet <<Objecttype>> {
     + content [1..1]
-    + title [1..1]
+    + title: CharacterString [1..1]
     --
     Kramdown text snippet with YAML front matter.
 '' Tekstfragmenten
 }
 
-Page "*" -> "*" Snippet
+Page "*" -> "+ title\n*" Snippet
 Snippet "*" -> "*" Snippet
 Collection "1" *-- "*" Snippet
 
@@ -154,7 +153,7 @@ NamedCollection "1" *-- "*" Tag
 '' Relaties --|> Collection
 '' Trefwoorden --|> Collection
 
-class SortOrder << Referentielijst >> {
+class SortOrder <<Referentielijst>> {
     + alfabetisch
     + chronologisch
     + sorteercode
