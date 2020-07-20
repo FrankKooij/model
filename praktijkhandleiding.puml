@@ -6,7 +6,7 @@ hide circle
 
 hide empty members
 
-'' hide stereotype
+hide stereotype
 
 hide <<enumeration>>
 
@@ -57,14 +57,20 @@ abstract class Collection <<Objecttype>> {
     + output: Boolean [1..1]
     + taglists: Boolean [1..1]
     + zoeken: Boolean [1..1]
+    --
+Set of pages that describe similar things.
 }
 
 Collection "*" --> "+ origin\n0..1" Collection
 
 class Layout <<Objecttype>> {
-    + script [0..]
+    + script [0..1]000
 --
-Alias of the script that generates the body of the web page.
+Body parts of a Components Layer that customizes the body of a web page to a specific layout.
+}
+
+class Default <<Objecttype>> {
+Script that generates the default body of a web page.
 }
 
 abstract class Theme <<Objecttype>> {
@@ -72,15 +78,15 @@ abstract class Theme <<Objecttype>> {
 
 Page "*" --> "+ file name\n1" Layout
 
-Layout "*" -> "0..1" Layout
+Layout "*" -> "+ file name\n0..1" Layout
 
 Collection "0..1" -- "0..1" Layout
 
 Layout "1" -- "0..1" Theme
 
-Default --|> Layout
+Default "*" --> "+ file name\n0" Layout
 
-Default "*" --> "0" Layout
+Default --|> Layout
 
 CollectionLayout -|> Layout
 
@@ -103,7 +109,7 @@ class Page <<Objecttype>> {
     + toc [0..1]
     + weergevenalsdatumontbreekt: Boolean [0..1]
     --
-    The body text of the web page (in Kramdown) with YAML front matter.
+    The body text of the web page (encoded as Kramdown) with meta data (encoded as YAML front matter).
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
     --
     SortOrder en Layout horen eigenlijk thuis bij collection
@@ -113,12 +119,12 @@ class Snippet <<Objecttype>> {
     + content [1..1]
     + title: CharacterString [1..1]
     --
-    Kramdown text snippet with YAML front matter.
+    Text snippet (encoded as Kramdown) with meta data (encoded as YAML front matter).
 '' Tekstfragmenten
 }
 
 Page "*" -> "+ title\n*" Snippet
-Snippet "*" -> "*" Snippet
+Snippet "*" -> "+ title\n*" Snippet
 Collection "1" *-- "*" Snippet
 
 abstract class Subtheme <<Objecttype>> {
