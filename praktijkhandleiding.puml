@@ -77,6 +77,16 @@ Page "*" --> "1" Layout
 
 Layout "*" -> "0..1" Layout
 
+Collection "0..1" -- "0..1" Layout
+
+Layout "1" -- "0..1" Theme
+
+Default -|> Layout
+
+CollectionLayout -|> Layout
+
+CollectionLayout "0..1" -- "1" Collection
+
 Page "*" --> "1" Theme
 
 '' Page::toc "1" -> "1" Page::content
@@ -99,6 +109,18 @@ class Page <<Objecttype>> {
     --
     SortOrder en Layout horen eigenlijk thuis bij collection?
 }
+
+class Snippet <<Objecttype>> {
+    + content [1..1]
+    + title [1..1]
+    --
+    Kramdown text snippet with YAML front matter.
+'' Tekstfragmenten
+}
+
+Page "*" -> "*" Snippet
+Snippet "*" -> "*" Snippet
+Collection "1" *-- "*" Snippet
 
 abstract class Subtheme <<Objecttype>> {
 }
