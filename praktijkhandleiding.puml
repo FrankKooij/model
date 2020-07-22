@@ -56,6 +56,8 @@ class Collection <<Objecttype>> {
     + output: Boolean [1..1]
     + tagLists: Boolean [1..1]
     + zoeken: Boolean [1..1]
+    --
+    Collection::allInstances()->isUnique(label)
 ''    --
 ''    + alias
 ''    + datums
@@ -110,6 +112,9 @@ class Template <<Objecttype>> {
     + menuSortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
     + title: CharacterString [1..1]
+    --
+    Template::allInstances()->isUnique(menuSortCode)
+    Template::allInstances()->isUnique(title)
 ''    --
 ''    + sorteercode
 ''    + sorteren
@@ -130,6 +135,9 @@ class Page <<Objecttype>> {
 ''     + toc: Toc [0..1]
     + toc [0..1]
     --
+    Page::allInstances()->isUnique(sortCode)
+    Page::allInstances()->isUnique(title)
+    --
     ???
     --
     The body text of the web page (encoded as Kramdown) with meta data (encoded as YAML front matter).
@@ -139,6 +147,8 @@ class Page <<Objecttype>> {
 class Snippet <<Objecttype>> {
     + content [1..1]
     + title: CharacterString [1..1]
+    --
+    Snippet::allInstances()->isUnique(title)
 ''    --
 ''    + title
     --
