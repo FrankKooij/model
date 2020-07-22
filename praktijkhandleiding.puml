@@ -49,22 +49,22 @@ Collection <|-- Subtheme
 ''     _config.yml
 '' }
 
-abstract class Collection <<Objecttype>> {
+class Collection <<Objecttype>> {
     + alias: CharacterString [0..1]
     + dates: Boolean [1..1]
     + label: CharacterString [1..1]
     + output: Boolean [1..1]
     + tagLists: Boolean [1..1]
     + zoeken: Boolean [1..1]
+''    --
+''    + alias
+''    + datums
+''    + label (=naam van collection)
+''    + output
+''    + taglists
+''    + zoeken
     --
-    + alias
-    + datums
-    + label (=naam van collection)
-    + output
-    + taglists
-    + zoeken
-    --
-Set of pages that describe similar things.
+Set of pages that describe similar concepts.
 }
 
 Collection "*" --> "+ origin\n0..1" Collection
@@ -79,7 +79,7 @@ class Default <<Objecttype>> {
 Core content structure of the body of a page.
 }
 
-abstract class Theme <<Objecttype>> {
+class Theme <<Objecttype>> {
 }
 
 Page "*" --> "+ file name\n1" Layout : Layout hoort\neigenlijk thuis\nbij Template
@@ -110,11 +110,11 @@ class Template <<Objecttype>> {
     + menuSortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
     + title: CharacterString [1..1]
-    --
-    + sorteercode
-    + sorteren
-    + title
-    + weergevenalsdatumontbreekt
+''    --
+''    + sorteercode
+''    + sorteren
+''    + title
+''    + weergevenalsdatumontbreekt
     --
     Content structure of an index page.
 }
@@ -130,6 +130,8 @@ class Page <<Objecttype>> {
 ''     + toc: Toc [0..1]
     + toc [0..1]
     --
+    ???
+    --
     The body text of the web page (encoded as Kramdown) with meta data (encoded as YAML front matter).
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
 }
@@ -137,8 +139,8 @@ class Page <<Objecttype>> {
 class Snippet <<Objecttype>> {
     + content [1..1]
     + title: CharacterString [1..1]
-    --
-    + title
+''    --
+''    + title
     --
     Text snippet (encoded as Kramdown) with meta data (encoded as YAML front matter).
 '' Tekstfragmenten
@@ -148,7 +150,7 @@ Page "*" -> "+ title\n*" Snippet
 Snippet "*" -> "+ title\n*" Snippet
 Collection "1" *-- "*" Snippet
 
-abstract class Subtheme <<Objecttype>> {
+class Subtheme <<Objecttype>> {
 }
 
 '' class Toc <<Gestructureerd datatype>> {
@@ -166,28 +168,24 @@ abstract class Tag <<Objecttype>> {
 ''     + name [1..1]
 }
 
-'' class Trefwoorden <<Objecttype>> {
+'' class NamedCollection <<Objecttype>> {
+''     Instance of a collection.
 '' }
 
-NamedCollection --|> Collection
+'' NamedCollection --|> Collection
 
-NamedCollection "1" *-- "*" Tag
+'' NamedCollection "1" *-- "*" Tag
 
-'' Beleidskaders --|> Collection
-'' Gebeurtenissen --|> Collection
-'' Modeldocumenten --|> Collection
-'' Objecttypen --|> Collection
-'' Relaties --|> Collection
-'' Trefwoorden --|> Collection
+Collection "0..1" *-- "*" Tag
 
 class SortOrder <<Referentielijst>> {
     + alphabetical
     + chronological
     + sortCode
-    --
-    + alfabetisch
-    + chronologisch
-    + sorteercode
+''    --
+''    + alfabetisch
+''    + chronologisch
+''    + sorteercode
 }
 
 @enduml
