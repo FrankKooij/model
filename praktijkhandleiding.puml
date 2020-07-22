@@ -18,10 +18,10 @@ hide namespace
 
 '' -------------------------------------------------------------------------------------------------
 
-hide <<Gestructureerd datatype>>
-hide <<Referentielijst>>
+'' hide <<Gestructureerd datatype>>
+'' hide <<Referentielijst>>
 
-skinparam wrapWidth 300
+skinparam wrapWidth 250
 
 '' =================================================================================================
 
@@ -37,25 +37,25 @@ Tag --|> Page
 '' Theme <|-- Trefwoorden
 Collection <|-- Theme
 Collection <|-- Subtheme
-Site "1" *-- "*" Collection
+'' Site "1" *-- "*" Collection
 '' Site "1" .. "*" Page
 
-abstract class Site <<Objecttype>> {
-    + config: Config [1..1]
-}
+'' abstract class Site <<Objecttype>> {
+''     + config: Config [1..1]
+'' }
 
-class Config <<Gestructureerd datatype>> {
-    --
-    _config.yml
-}
+'' class Config <<Gestructureerd datatype>> {
+''     --
+''     _config.yml
+'' }
 
 abstract class Collection <<Objecttype>> {
     + name: CharacterString [1..1]
     + alias: CharacterString [0..1]
-    + datums: Boolean [1..1]
+    + dates: Boolean [1..1]
 ''    + origin [0..1]
     + output: Boolean [1..1]
-    + taglists: Boolean [1..1]
+    + tagLists: Boolean [1..1]
     + zoeken: Boolean [1..1]
     --
 Set of pages that describe similar things.
@@ -64,13 +64,13 @@ Set of pages that describe similar things.
 Collection "*" --> "+ origin\n0..1" Collection
 
 class Layout <<Objecttype>> {
-    + script [0..1]000
+    + script [0..1]
 --
-Body parts of a Components Layer that customizes the body of a web page to a specific layout.
+Content structure that enhances the body of a page.
 }
 
 class Default <<Objecttype>> {
-Script that generates the default body of a web page.
+Core content structure of the body of a page.
 }
 
 abstract class Theme <<Objecttype>> {
@@ -88,13 +88,23 @@ Default "*" --> "+ file name\n0" Layout
 
 Default --|> Layout
 
-CollectionLayout -|> Layout
+Template "*" --> "1" Layout
 
-CollectionLayout "0..1" -- "1" Collection
+Template "0..1" -- "1" Collection
 
 Page "*" --> "1" Theme
 
 '' Page::toc "1" -> "1" Page::content
+
+
+class Template <<Objecttype>> {
+    + collectionSortOrder: SortOrder [1..1]
+    + showNoDateItems: Boolean [1..1]
+    + menuSortCode: CharacterString [0..1]
+    + title: CharacterString [1..1]
+    --
+    Content structure for an index page.
+}
 
 class Page <<Objecttype>> {
     + content [1..1]
@@ -102,17 +112,15 @@ class Page <<Objecttype>> {
     + description: CharacterString [0..1]
     + editor: CharacterString [0..1]
     + mermaid: Boolean [0..1]
-    + sorteercode: CharacterString [0..1]
-    + sorteren: SortOrder [0..1]
+    + sortCode: CharacterString [0..1]
     + title: CharacterString [1..1]
 ''     + toc: Toc [0..1]
     + toc [0..1]
-    + weergevenalsdatumontbreekt: Boolean [0..1]
     --
     The body text of the web page (encoded as Kramdown) with meta data (encoded as YAML front matter).
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
     --
-    SortOrder en Layout horen eigenlijk thuis bij collection
+    Layout hoort eigenlijk thuis bij collection
 }
 
 class Snippet <<Objecttype>> {
@@ -145,8 +153,8 @@ abstract class Tag <<Objecttype>> {
 ''     + name [1..1]
 }
 
-class Trefwoorden <<Objecttype>> {
-}
+'' class Trefwoorden <<Objecttype>> {
+'' }
 
 NamedCollection --|> Collection
 
@@ -160,9 +168,9 @@ NamedCollection "1" *-- "*" Tag
 '' Trefwoorden --|> Collection
 
 class SortOrder <<Referentielijst>> {
-    + alfabetisch
-    + chronologisch
-    + sorteercode
+    + alphabetical
+    + chronological
+    + sortCode
 }
 
 @enduml
