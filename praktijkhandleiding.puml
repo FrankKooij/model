@@ -177,14 +177,6 @@ abstract class Tag <<Objecttype>> {
 ''     + name [1..1]
 }
 
-'' class NamedCollection <<Objecttype>> {
-''     Instance of a collection
-'' }
-
-'' NamedCollection --|> Collection
-
-'' NamedCollection "1" *-- "*" Tag
-
 Collection "0..1" *-- "*" Tag
 
 class SortOrder <<Referentielijst>> {
