@@ -50,19 +50,19 @@ Collection <|-- Subtheme
 '' }
 
 class Collection <<Objecttype>> {
-    + alias: CharacterString [0..1]
-    + dates: Boolean [1..1]
     + label: CharacterString [1..1] {classifier}
-    + output: Boolean [1..1]
-    + tagLists: Boolean [1..1]
-    + zoeken: Boolean [1..1]
+    + alias: CharacterString [0..1]
+    + showDates: Boolean [1..1]
+''    + output: Boolean [1..1]
+    + includeInTagLists: Boolean [1..1]
+    + includeInSearch: Boolean [1..1]
     --constraints--
     + label uniquely identifies each collection
 ''    --nederlands--
 ''    + alias
 ''    + datums
 ''    + label (=naam van collection)
-''    + output
+''    + output (=wel of niet webpagina genereren voor documenten in collection)
 ''    + taglists
 ''    + zoeken
     --definition--
@@ -106,10 +106,10 @@ Template "0..1" -- "1" Collection
 Document "*" --> "1" Theme
 
 class Template <<Objecttype>> {
+    + title: CharacterString [1..1] {classifier}
     + collectionSortOrder: SortOrder [1..1]
     + menuSortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
-    + title: CharacterString [1..1] {classifier}
     --constraints--
     + title uniquely identifies each template
     + menuSortCode must be unique
@@ -123,13 +123,13 @@ class Template <<Objecttype>> {
 }
 
 class Document <<Objecttype>> {
+    + title: CharacterString [1..1] {classifier}
     + content: CharacterString [1..1]
     + date: Date [0..1]
     + description: CharacterString [0..1]
     + editor: CharacterString [0..1]
     + mermaid: Boolean [0..1]
     + sortCode: CharacterString [0..1]
-    + title: CharacterString [1..1] {classifier}
     + toc: TableOfContents [0..1]
     --constraints--
     + title uniquely identifies each document within a collection
@@ -143,8 +143,8 @@ class Document <<Objecttype>> {
 }
 
 class Snippet <<Objecttype>> {
-    + content: CharacterString [1..1]
     + title: CharacterString [1..1] {classifier}
+    + content: CharacterString [1..1]
     --constraints--
     + title uniquely identifies each snippet
 ''    --nederlands--
