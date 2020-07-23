@@ -87,15 +87,15 @@ class Default <<Objecttype>> {
 class Theme <<Objecttype>> {
 }
 
-Document "*" --> "+ file name\n1" Layout
+Document "*" --> "1" Layout
 
-Layout "*" --> "+ file name\n0..1" Layout
+Layout "*" --> "0..1" Layout
 
 Collection "0..1" -- "0..1" Layout
 
 Layout "1" -- "0..1" Theme
 
-Default "*" --> "+ file name\n0" Layout
+Default "*" --> "0" Layout
 
 Default --|> Layout
 
