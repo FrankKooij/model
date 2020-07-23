@@ -58,8 +58,6 @@ class Collection <<Objecttype>> {
     + zoeken: Boolean [1..1]
     --constraints--
     + label uniquely identifies each collection
-''     Collection::allInstances()->isUnique(label)
-''     context Collection inv: Collection.allInstances()->forAll(c1, c2 | c1 <> c2 implies c1.label <> c2.label)
 ''    --nederlands--
 ''    + alias
 ''    + datums
@@ -117,8 +115,6 @@ class Template <<Objecttype>> {
     --constraints--
     + title uniquely identifies each template
     + menuSortCode must be unique
-''     Template::allInstances()->isUnique(menuSortCode)
-''     context Template inv: Template.allInstances()->forAll(t1, t2 | t1 <> t2 implies t1.title <> t2.title)
 ''    --nederlands--
 ''    + sorteercode
 ''    + sorteren
@@ -140,8 +136,6 @@ class Document <<Objecttype>> {
     --constraints--
     + title uniquely identifies each document
     + sortCode must be either empty for all documents in the collection or unique
-''     context Document inv: Document.allInstances()->forAll(d1, d2 | d1 <> d2 implies d1.title <> d2.title)
-''     Document::allInstances()->isUnique(sortCode) or Document::allInstances()->isEmpty(sortCode)
     --nederlands--
     ???
     --definition--
@@ -154,8 +148,6 @@ class Snippet <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     --constraints--
     + title uniquely identifies each snippet
-''     Snippet::allInstances()->isUnique(title)
-''     context Snippet inv: Snippet.allInstances()->forAll(s1, s2 | s1 <> s2 implies s1.title <> s2.title)
 ''    --nederlands--
 ''    + title
     --definition--
