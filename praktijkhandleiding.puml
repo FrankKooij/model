@@ -6,7 +6,7 @@ hide circle
 
 hide empty members
 
-hide stereotype
+'' hide stereotype
 
 hide <<enumeration>>
 
@@ -52,20 +52,22 @@ Collection <|-- Subtheme
 class Collection <<Objecttype>> {
     + alias: CharacterString [0..1]
     + dates: Boolean [1..1]
-    + label: CharacterString [1..1]
+    + label: CharacterString [1..1] {classifier}
     + output: Boolean [1..1]
     + tagLists: Boolean [1..1]
     + zoeken: Boolean [1..1]
-    --
-    Collection::allInstances()->isUnique(label)
-''    --
+    --constraints--
+    - label uniquely identifies each collection
+''     Collection::allInstances()->isUnique(label)
+''     context Collection inv: Collection.allInstances()->forAll(c1, c2 | c1 <> c2 implies c1.label <> c2.label)
+''    --nederlands--
 ''    + alias
 ''    + datums
 ''    + label (=naam van collection)
 ''    + output
 ''    + taglists
 ''    + zoeken
-    --
+    --definition--
 Set of documents that describe similar concepts.
 }
 
@@ -73,18 +75,19 @@ Collection "*" --> "+ origin\n0..1" Collection
 
 class Layout <<Objecttype>> {
     + script [0..1]
---
-Content structure that enhances the body of a page.
+    --definition--
+    Content structure that enhances the body of a page.
 }
 
 class Default <<Objecttype>> {
-Core content structure of the body of a page.
+''     --definition--
+    Core content structure of the body of a page.
 }
 
 class Theme <<Objecttype>> {
 }
 
-Document "*" --> "+ file name\n1" Layout : Layout hoort\neigenlijk thuis\nbij Template
+Document "*" --> "+ file name\n1" Layout
 
 Layout "*" --> "+ file name\n0..1" Layout
 
@@ -111,16 +114,18 @@ class Template <<Objecttype>> {
     + collectionSortOrder: SortOrder [1..1]
     + menuSortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
-    + title: CharacterString [1..1]
-    --
-    Template::allInstances()->isUnique(menuSortCode)
-    Template::allInstances()->isUnique(title)
-''    --
+    + title: CharacterString [1..1] {classifier}
+    --constraints--
+    - title uniquely identifies each template
+    - menuSortCode must be unique
+''     Template::allInstances()->isUnique(menuSortCode)
+''     context Template inv: Template.allInstances()->forAll(t1, t2 | t1 <> t2 implies t1.title <> t2.title)
+''    --nederlands--
 ''    + sorteercode
 ''    + sorteren
 ''    + title
 ''    + weergevenalsdatumontbreekt
-    --
+    --definition--
     Content structure of a collection overview page.
 }
 
@@ -131,27 +136,30 @@ class Document <<Objecttype>> {
     + editor: CharacterString [0..1]
     + mermaid: Boolean [0..1]
     + sortCode: CharacterString [0..1]
-    + title: CharacterString [1..1]
-''     + toc: Toc [0..1]
-    + toc: Toc [0..1]
-    --
-    Document::allInstances()->isUnique(sortCode)
-    Document::allInstances()->isUnique(title)
-    --
+    + title: CharacterString [1..1] {classifier}
+    + toc: TableOfContents [0..1]
+    --constraints--
+    - title uniquely identifies each document
+    - sortCode must be either empty for all documents in the collection or unique
+''     context Document inv: Document.allInstances()->forAll(d1, d2 | d1 <> d2 implies d1.title <> d2.title)
+''     Document::allInstances()->isUnique(sortCode) or Document::allInstances()->isEmpty(sortCode)
+    --nederlands--
     ???
-    --
+    --definition--
     The text for the body of a web page (encoded as Kramdown) with its meta data (encoded as YAML front matter).
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
 }
 
 class Snippet <<Objecttype>> {
     + content: CharacterString [1..1]
-    + title: CharacterString [1..1]
-    --
-    Snippet::allInstances()->isUnique(title)
-''    --
+    + title: CharacterString [1..1] {classifier}
+    --constraints--
+    - title uniquely identifies each snippet
+''     Snippet::allInstances()->isUnique(title)
+''     context Snippet inv: Snippet.allInstances()->forAll(s1, s2 | s1 <> s2 implies s1.title <> s2.title)
+''    --nederlands--
 ''    + title
-    --
+    --definition--
     Text snippet (encoded as Kramdown) with its meta data (encoded as YAML front matter).
 '' Tekstfragmenten
 }
@@ -163,9 +171,9 @@ Collection "1" *-- "*" Snippet
 class Subtheme <<Objecttype>> {
 }
 
-class Toc <<Gestructureerd datatype>> {
+class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
-    --
+    --definition--
     Selection of content headings for a navigable table of contents (exact quotations encoded as a YAML sequence).
 }
 
