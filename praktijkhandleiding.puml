@@ -128,15 +128,21 @@ class Document <<Objecttype>> {
     + date: Date [0..1]
     + description: CharacterString [0..1]
     + editor: CharacterString [0..1]
-    + mermaid: Boolean [0..1]
+    + hasDiagrams: Boolean [0..1]
     + sortCode: CharacterString [0..1]
     + toc: TableOfContents [0..1]
     --constraints--
     + title uniquely identifies each document within a collection
     + sortCode must be either empty for all documents in the collection or unique
     + document should not tag itself
-    --nederlands--
-    ???
+''    --nederlands--
+''    + title
+''    + date
+''    + description
+''    + editor
+''    + mermaid
+''    + sorteercode
+''    + toc
     --definition--
     The text for the body of a web page (encoded as Kramdown) with its meta data (encoded as YAML front matter)
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter
