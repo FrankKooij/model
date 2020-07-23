@@ -105,8 +105,6 @@ Template "0..1" -- "1" Collection
 
 Document "*" --> "1" Theme
 
-'' Document::toc "1" -> "1" Document::content
-
 class Template <<Objecttype>> {
     + collectionSortOrder: SortOrder [1..1]
     + menuSortCode: CharacterString [1..1]
@@ -136,6 +134,7 @@ class Document <<Objecttype>> {
     --constraints--
     + title uniquely identifies each document
     + sortCode must be either empty for all documents in the collection or unique
+    + document should not tag itself
     --nederlands--
     ???
     --definition--
@@ -167,6 +166,8 @@ class TableOfContents <<Gestructureerd datatype>> {
     --definition--
     Selection of content headings for a navigable table of contents (exact quotations encoded as a YAML sequence)
 }
+
+'' TableOfContents "0..*" -- "1..*" Document::content
 
 '' abstract class TagCollection <<Objecttype>> {
 '' }
