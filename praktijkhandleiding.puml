@@ -27,16 +27,12 @@ skinparam wrapWidth 250
 
 '' title Conceptueel informatiemodel van de praktijkhandleiding
 
-Theme "1" --> "*" Subtheme
 Collection "1" *-- "*" Document
 '' TagCollection "1" *-- "*" Tag
 '' Tag "*\n+ collection\n+ title" <-- "*" Document
 Tag "+ collection\n+ title\n*" <-- "*" Document
 '' Tag "0..1" *-- "1" Document
 Tag --|> Document
-'' Theme <|-- Trefwoorden
-Collection <|-- Theme
-Collection <|-- Subtheme
 '' Site "1" *-- "*" Collection
 '' Site "1" .. "*" Document
 
@@ -82,16 +78,11 @@ class Default <<Objecttype>> {
     Core content structure of the body of a page
 }
 
-class Theme <<Objecttype>> {
-}
-
 Document "*" --> "1" Layout
 
 Layout "*" --> "0..1" Layout
 
 Collection "0..1" -- "0..1" Layout
-
-Layout "1" -- "0..1" Theme
 
 Default "*" --> "0" Layout
 
@@ -102,8 +93,6 @@ Template --|> Layout
 Template "*" --> "+ layout\n1" Layout
 
 Template "0..1" -- "1" Collection
-
-Document "*" --> "1" Theme
 
 class Template <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
@@ -163,9 +152,6 @@ class Snippet <<Objecttype>> {
 Document "*" -> "+ title\n*" Snippet
 Snippet "*" -> "+ title\n*" Snippet
 Collection "1" *-- "*" Snippet
-
-class Subtheme <<Objecttype>> {
-}
 
 class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
