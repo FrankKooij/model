@@ -57,7 +57,7 @@ class Collection <<Objecttype>> {
     + tagLists: Boolean [1..1]
     + zoeken: Boolean [1..1]
     --constraints--
-    - label uniquely identifies each collection
+    + label uniquely identifies each collection
 ''     Collection::allInstances()->isUnique(label)
 ''     context Collection inv: Collection.allInstances()->forAll(c1, c2 | c1 <> c2 implies c1.label <> c2.label)
 ''    --nederlands--
@@ -116,8 +116,8 @@ class Template <<Objecttype>> {
     + showNoDateItems: Boolean [1..1]
     + title: CharacterString [1..1] {classifier}
     --constraints--
-    - title uniquely identifies each template
-    - menuSortCode must be unique
+    + title uniquely identifies each template
+    + menuSortCode must be unique
 ''     Template::allInstances()->isUnique(menuSortCode)
 ''     context Template inv: Template.allInstances()->forAll(t1, t2 | t1 <> t2 implies t1.title <> t2.title)
 ''    --nederlands--
@@ -139,8 +139,8 @@ class Document <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + toc: TableOfContents [0..1]
     --constraints--
-    - title uniquely identifies each document
-    - sortCode must be either empty for all documents in the collection or unique
+    + title uniquely identifies each document
+    + sortCode must be either empty for all documents in the collection or unique
 ''     context Document inv: Document.allInstances()->forAll(d1, d2 | d1 <> d2 implies d1.title <> d2.title)
 ''     Document::allInstances()->isUnique(sortCode) or Document::allInstances()->isEmpty(sortCode)
     --nederlands--
@@ -154,7 +154,7 @@ class Snippet <<Objecttype>> {
     + content: CharacterString [1..1]
     + title: CharacterString [1..1] {classifier}
     --constraints--
-    - title uniquely identifies each snippet
+    + title uniquely identifies each snippet
 ''     Snippet::allInstances()->isUnique(title)
 ''     context Snippet inv: Snippet.allInstances()->forAll(s1, s2 | s1 <> s2 implies s1.title <> s2.title)
 ''    --nederlands--
