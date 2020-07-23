@@ -68,7 +68,7 @@ class Collection <<Objecttype>> {
 ''    + taglists
 ''    + zoeken
     --definition--
-Set of documents that describe similar concepts.
+Set of documents that describe similar concepts
 }
 
 Collection "*" --> "+ origin\n0..1" Collection
@@ -76,12 +76,12 @@ Collection "*" --> "+ origin\n0..1" Collection
 class Layout <<Objecttype>> {
     + script [0..1]
     --definition--
-    Content structure that enhances the body of a page.
+    Content structure that enhances the body of a page
 }
 
 class Default <<Objecttype>> {
 ''     --definition--
-    Core content structure of the body of a page.
+    Core content structure of the body of a page
 }
 
 class Theme <<Objecttype>> {
@@ -109,7 +109,6 @@ Document "*" --> "1" Theme
 
 '' Document::toc "1" -> "1" Document::content
 
-
 class Template <<Objecttype>> {
     + collectionSortOrder: SortOrder [1..1]
     + menuSortCode: CharacterString [1..1]
@@ -126,7 +125,7 @@ class Template <<Objecttype>> {
 ''    + title
 ''    + weergevenalsdatumontbreekt
     --definition--
-    Content structure of a collection overview page.
+    Content structure of a collection overview page
 }
 
 class Document <<Objecttype>> {
@@ -146,8 +145,8 @@ class Document <<Objecttype>> {
     --nederlands--
     ???
     --definition--
-    The text for the body of a web page (encoded as Kramdown) with its meta data (encoded as YAML front matter).
-''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
+    The text for the body of a web page (encoded as Kramdown) with its meta data (encoded as YAML front matter)
+''    De romptekst van de webpagina (in Kramdown) met YAML front matter
 }
 
 class Snippet <<Objecttype>> {
@@ -160,7 +159,7 @@ class Snippet <<Objecttype>> {
 ''    --nederlands--
 ''    + title
     --definition--
-    Text snippet (encoded as Kramdown) with its meta data (encoded as YAML front matter).
+    Text snippet (encoded as Kramdown) with its meta data (encoded as YAML front matter)
 '' Tekstfragmenten
 }
 
@@ -174,7 +173,7 @@ class Subtheme <<Objecttype>> {
 class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
     --definition--
-    Selection of content headings for a navigable table of contents (exact quotations encoded as a YAML sequence).
+    Selection of content headings for a navigable table of contents (exact quotations encoded as a YAML sequence)
 }
 
 '' abstract class TagCollection <<Objecttype>> {
@@ -187,7 +186,7 @@ abstract class Tag <<Objecttype>> {
 }
 
 '' class NamedCollection <<Objecttype>> {
-''     Instance of a collection.
+''     Instance of a collection
 '' }
 
 '' NamedCollection --|> Collection
@@ -200,10 +199,12 @@ class SortOrder <<Referentielijst>> {
     + alphabetical
     + chronological
     + sortCode
-''    --
+''    --nederlands--
 ''    + alfabetisch
 ''    + chronologisch
 ''    + sorteercode
+    --definition--
+    Valid choices for the order in which a list of navigable page links is presented
 }
 
 @enduml
