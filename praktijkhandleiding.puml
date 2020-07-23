@@ -31,7 +31,7 @@ Theme "1" --> "*" Subtheme
 Collection "1" *-- "*" Document
 '' TagCollection "1" *-- "*" Tag
 '' Tag "*\n+ collection\n+ title" <-- "*" Document
-Tag "*" <-- "*" Document
+Tag "+ collection\n+ title\n*" <-- "*" Document
 '' Tag "0..1" *-- "1" Document
 Tag --|> Document
 '' Theme <|-- Trefwoorden
@@ -132,7 +132,7 @@ class Document <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + toc: TableOfContents [0..1]
     --constraints--
-    + title uniquely identifies each document
+    + title uniquely identifies each document within a collection
     + sortCode must be either empty for all documents in the collection or unique
     + document should not tag itself
     --nederlands--
@@ -177,8 +177,6 @@ class TableOfContents <<Gestructureerd datatype>> {
 abstract class Tag <<Objecttype>> {
 ''     + name [1..1]
 }
-
-Collection "0..1" *-- "*" Tag
 
 class SortOrder <<Referentielijst>> {
     + alphabetical
