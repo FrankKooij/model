@@ -28,17 +28,17 @@ skinparam wrapWidth 250
 '' title Conceptueel informatiemodel van de praktijkhandleiding
 
 Theme "1" --> "*" Subtheme
-Collection "1" *-- "*" Page
+Collection "1" *-- "*" Document
 '' TagCollection "1" *-- "*" Tag
-'' Tag "*\n+ collection\n+ title" <-- "*" Page
-Tag "*" <-- "*" Page
-'' Tag "0..1" *-- "1" Page
-Tag --|> Page
+'' Tag "*\n+ collection\n+ title" <-- "*" Document
+Tag "*" <-- "*" Document
+'' Tag "0..1" *-- "1" Document
+Tag --|> Document
 '' Theme <|-- Trefwoorden
 Collection <|-- Theme
 Collection <|-- Subtheme
 '' Site "1" *-- "*" Collection
-'' Site "1" .. "*" Page
+'' Site "1" .. "*" Document
 
 '' abstract class Site <<Objecttype>> {
 ''     + config: Config [1..1]
@@ -66,7 +66,7 @@ class Collection <<Objecttype>> {
 ''    + taglists
 ''    + zoeken
     --
-Set of pages that describe similar concepts.
+Set of documents that describe similar concepts.
 }
 
 Collection "*" --> "+ origin\n0..1" Collection
@@ -84,7 +84,7 @@ Core content structure of the body of a page.
 class Theme <<Objecttype>> {
 }
 
-Page "*" --> "+ file name\n1" Layout : Layout hoort\neigenlijk thuis\nbij Template
+Document "*" --> "+ file name\n1" Layout : Layout hoort\neigenlijk thuis\nbij Template
 
 Layout "*" --> "+ file name\n0..1" Layout
 
@@ -102,9 +102,9 @@ Template "*" --> "+ layout\n1" Layout
 
 Template "0..1" -- "1" Collection
 
-Page "*" --> "1" Theme
+Document "*" --> "1" Theme
 
-'' Page::toc "1" -> "1" Page::content
+'' Document::toc "1" -> "1" Document::content
 
 
 class Template <<Objecttype>> {
@@ -121,53 +121,53 @@ class Template <<Objecttype>> {
 ''    + title
 ''    + weergevenalsdatumontbreekt
     --
-    Content structure of an index page.
+    Content structure of a collection overview page.
 }
 
-class Page <<Objecttype>> {
-    + content [1..1]
-    + date: yyyy-mm-dd [0..1]
+class Document <<Objecttype>> {
+    + content: CharacterString [1..1]
+    + date: Date [0..1]
     + description: CharacterString [0..1]
     + editor: CharacterString [0..1]
     + mermaid: Boolean [0..1]
     + sortCode: CharacterString [0..1]
     + title: CharacterString [1..1]
 ''     + toc: Toc [0..1]
-    + toc [0..1]
+    + toc: Toc [0..1]
     --
-    Page::allInstances()->isUnique(sortCode)
-    Page::allInstances()->isUnique(title)
+    Document::allInstances()->isUnique(sortCode)
+    Document::allInstances()->isUnique(title)
     --
     ???
     --
-    The body text of the web page (encoded as Kramdown) with meta data (encoded as YAML front matter).
+    The text for the body of a web page (encoded as Kramdown) with its meta data (encoded as YAML front matter).
 ''    De romptekst van de webpagina (in Kramdown) met YAML front matter.
 }
 
 class Snippet <<Objecttype>> {
-    + content [1..1]
+    + content: CharacterString [1..1]
     + title: CharacterString [1..1]
     --
     Snippet::allInstances()->isUnique(title)
 ''    --
 ''    + title
     --
-    Text snippet (encoded as Kramdown) with meta data (encoded as YAML front matter).
+    Text snippet (encoded as Kramdown) with its meta data (encoded as YAML front matter).
 '' Tekstfragmenten
 }
 
-Page "*" -> "+ title\n*" Snippet
+Document "*" -> "+ title\n*" Snippet
 Snippet "*" -> "+ title\n*" Snippet
 Collection "1" *-- "*" Snippet
 
 class Subtheme <<Objecttype>> {
 }
 
-'' class Toc <<Gestructureerd datatype>> {
-''     + koptekst [1..*]
-''     --
-''     Selectieve lijst van letterlijk overgenomen hoofdstuk- en paragraaftitels uit de content, die samen de basis vormen voor een navigeerbare inhoudsopgave.
-'' }
+class Toc <<Gestructureerd datatype>> {
+    + heading: CharacterString [1..*]
+    --
+    Selection of content headings for a navigable table of contents (exact quotations encoded as a YAML sequence).
+}
 
 '' abstract class TagCollection <<Objecttype>> {
 '' }
