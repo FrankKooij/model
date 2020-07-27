@@ -50,7 +50,7 @@ class Collection <<Objecttype>> {
     + alias: CharacterString [0..1]
     + showDates: Boolean [1..1]
 ''    + output: Boolean [1..1]
-    + includeInTagLists: Boolean [1..1]
+    + useAsTags: Boolean [1..1]
     + includeInSearch: Boolean [1..1]
     --constraints--
     + label uniquely identifies each collection
@@ -71,11 +71,15 @@ class Layout <<Objecttype>> {
     + script [0..1]
     --definition--
     Content structure that enhances the body of a page
+    --encoding--
+    HTML with Liquid and YAML front matter
 }
 
 class Default <<Objecttype>> {
 ''     --definition--
     Core content structure of the body of a page
+    --encoding--
+    HTML with Liquid
 }
 
 Document "*" --> "1" Layout
@@ -84,7 +88,7 @@ Layout "*" --> "0..1" Layout
 
 Collection "0..1" -- "0..1" Layout
 
-Default "*" --> "0" Layout
+Default "*" -- "0" Layout
 
 Default --|> Layout
 
@@ -97,18 +101,22 @@ Template "0..1" -- "1" Collection
 class Template <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + collectionSortOrder: SortOrder [1..1]
-    + menuSortCode: CharacterString [1..1]
+    + hasDiagrams: Boolean [0..1]
+    + sortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
     --constraints--
     + title uniquely identifies each template
-    + menuSortCode must be unique
+    + sortCode for site overview must be unique
 ''    --nederlands--
+''    + mermaid
 ''    + sorteercode
 ''    + sorteren
 ''    + title
 ''    + weergevenalsdatumontbreekt
     --definition--
-    Content structure of a collection overview page
+    Content structure of the overview page of a root collection
+    --encoding--
+    HTML with Liquid and YAML front matter
 }
 
 class Document <<Objecttype>> {
@@ -118,12 +126,16 @@ class Document <<Objecttype>> {
     + description: CharacterString [0..1]
     + editor: CharacterString [0..1]
     + hasDiagrams: Boolean [0..1]
+    + hasSubDocs: Boolean [0..1]
     + sortCode: CharacterString [0..1]
+    + subDocCollection: CharacterString [0..1]
     + toc: TableOfContents [0..1]
     --constraints--
     + title uniquely identifies each document within a collection
-    + sortCode must be either empty for all documents in the collection or unique
-    + document should not tag itself
+    + sortCode for collection overview must be either unique or empty for all documents in the collection
+    + a document should not tag itself
+    + subDocCollection is required if a document has subdocuments
+    + all subdocuments to a document must be in the same collection
 ''    --nederlands--
 ''    + title
 ''    + date
@@ -133,9 +145,13 @@ class Document <<Objecttype>> {
 ''    + sorteercode
 ''    + toc
     --definition--
-    The text for the body of a web page (encoded as Kramdown) with its meta data (encoded as YAML front matter)
-''    De romptekst van de webpagina (in Kramdown) met YAML front matter
+    The text for the body of a web page with its meta data
+''    De romptekst van de webpagina met metagegevens
+    --encoding--
+    Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
 }
+
+Document "*" --> "+ subDocCollection\n0..1" Collection
 
 class Snippet <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
@@ -145,18 +161,26 @@ class Snippet <<Objecttype>> {
 ''    --nederlands--
 ''    + title
     --definition--
-    Text snippet (encoded as Kramdown) with its meta data (encoded as YAML front matter)
-'' Tekstfragmenten
+    Text snippet with its meta data
+'' Tekstfragmenten met metagegevens
+    --encoding--
+    Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
 }
 
+Template "*" -> "+ title\n*" Snippet
+
 Document "*" -> "+ title\n*" Snippet
+
 Snippet "*" -> "+ title\n*" Snippet
+
 Collection "1" *-- "*" Snippet
 
 class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
     --definition--
-    Selection of content headings for a navigable table of contents (exact quotations encoded as a YAML sequence)
+    Selected exact quotations of content headings for a navigable table of contents in the sidebar
+    --encoding--
+    YAML sequence
 }
 
 '' TableOfContents "0..*" -- "1..*" Document::content
@@ -168,6 +192,8 @@ class TableOfContents <<Gestructureerd datatype>> {
 
 abstract class Tag <<Objecttype>> {
 ''     + name [1..1]
+    --definition--
+    Document in a taggable collection
 }
 
 class SortOrder <<Referentielijst>> {
@@ -179,7 +205,7 @@ class SortOrder <<Referentielijst>> {
 ''    + chronologisch
 ''    + sorteercode
     --definition--
-    Valid choices for the order in which a list of navigable page links is presented
+    Valid choices for the order in which a list of navigable links is presented
 }
 
 @enduml
