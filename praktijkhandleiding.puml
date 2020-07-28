@@ -68,7 +68,7 @@ Set of documents that describe similar concepts
 Collection "*" --> "+ origin\n0..1" Collection
 
 class Layout <<Objecttype>> {
-    + script [0..1]
+    + theme
     --definition--
     Content structure that enhances the body of a page
     --encoding--
@@ -82,11 +82,13 @@ class Default <<Objecttype>> {
     HTML with Liquid
 }
 
-Document "*" --> "1" Layout
+Document "*" --> "+ layout\n1" Layout
 
-Layout "*" --> "0..1" Layout
+Layout "*" --> "+ layout\n0..1" Layout
 
-Collection "0..1" -- "0..1" Layout
+Collection "+ scope\n0..1" <-- "*" Layout
+
+Collection "+ theme\n0..1" <-- "1" Layout
 
 Default "*" -- "0" Layout
 
@@ -96,17 +98,18 @@ Template --|> Layout
 
 Template "*" --> "+ layout\n1" Layout
 
-Template "0..1" -- "1" Collection
+Template "0..1" --> "+ scope\n1" Collection
 
 class Template <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + collectionSortOrder: SortOrder [1..1]
     + hasDiagrams: Boolean [0..1]
+    + siteMenu: Boolean [0..1]
     + sortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
     --constraints--
     + title uniquely identifies each template
-    + sortCode for site overview must be unique
+    + sortCode for site menu must be unique
 ''    --nederlands--
 ''    + mermaid
 ''    + sorteercode
