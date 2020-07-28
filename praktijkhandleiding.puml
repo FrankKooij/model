@@ -68,7 +68,7 @@ Set of documents that describe similar concepts
 Collection "*" --> "+ origin\n0..1" Collection
 
 class Layout <<Objecttype>> {
-    + theme
+    + script
     --definition--
     Content structure that enhances the body of a page
     --encoding--
@@ -104,6 +104,7 @@ class Template <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + collectionSortOrder: SortOrder [1..1]
     + hasDiagrams: Boolean [0..1]
+    + script
     + siteMenu: Boolean [0..1]
     + sortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
@@ -170,11 +171,11 @@ class Snippet <<Objecttype>> {
     Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
 }
 
-Template "*" -> "+ title\n*" Snippet
+Template "*" --> "+ title\n*" Snippet
 
-Document "*" -> "+ title\n*" Snippet
+Document "*" --> "+ title\n*" Snippet
 
-Snippet "*" -> "+ title\n*" Snippet
+Snippet "*" --> "+ title\n*" Snippet
 
 Collection "1" *-- "*" Snippet
 
