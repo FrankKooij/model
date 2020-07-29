@@ -21,6 +21,7 @@ hide namespace
 hide <<Gestructureerd datatype>>
 hide <<Referentielijst>>
 hide Snippet
+hide Site
 
 skinparam wrapWidth 250
 
@@ -29,17 +30,20 @@ skinparam wrapWidth 250
 '' title Conceptueel informatiemodel van de praktijkhandleiding
 
 Collection "1" *-- "*" Document
-'' TagCollection "1" *-- "*" Tag
 '' Tag "*\n+ collection\n+ title" <-- "*" Document
-Tag "+ collection\n+ title\n*" <-- "*" Document
+'' Tag "+ label of\ncollection\n+ title\nof tag\n*" <-- "*" Document
+Document "*" <--> "*" Tag
 '' Tag "0..1" *-- "1" Document
+'' Tag "*" --> "1" Collection
 Tag --|> Document
-'' Site "1" *-- "*" Collection
+Site "1" *-- "1..*" Collection
+Site "1" *-- "1..*" Template
+Site "1" *-- "1..*" Layout
 '' Site "1" .. "*" Document
 
-'' abstract class Site <<Objecttype>> {
+abstract class Site <<Objecttype>> {
 ''     + config: Config [1..1]
-'' }
+}
 
 '' class Config <<Gestructureerd datatype>> {
 ''     --
@@ -87,9 +91,11 @@ Document "*" --> "+ layout\n1" Layout
 
 Layout "*" --> "+ layout\n0..1" Layout
 
-Collection "+ scope\n0..1" <-- "*" Layout
+Layout "*" --> "+ label of\ncollection\n\n0..1" Collection
 
-Collection "+ theme\n0..1" <-- "1" Layout
+Collection "+ label\n0..1" <-- "*" Layout
+
+Collection "+ label to\nfilter by\n0..1" <-- "1" Layout
 
 Default "*" -- "0" Layout
 
@@ -133,7 +139,6 @@ class Document <<Objecttype>> {
     + hasDiagrams: Boolean [0..1]
     + hasSubDocs: Boolean [0..1]
     + sortCode: CharacterString [0..1]
-    + subDocCollection: CharacterString [0..1]
     + toc: TableOfContents [0..1]
     --constraints--
     + title uniquely identifies each document within a collection
