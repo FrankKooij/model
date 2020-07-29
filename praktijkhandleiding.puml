@@ -155,7 +155,7 @@ class Document <<Objecttype>> {
 ''    + sorteercode
 ''    + toc
     --definition--
-    The text for the body of a web page with its meta data
+    The text for the body of a page with its metadata
 ''    De romptekst van de webpagina met metagegevens
     --encoding--
     Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
@@ -171,7 +171,7 @@ class Snippet <<Objecttype>> {
 ''    --nederlands--
 ''    + title
     --definition--
-    Text snippet with its meta data
+    Text snippet with its metadata
 '' Tekstfragmenten met metagegevens
     --encoding--
     Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
