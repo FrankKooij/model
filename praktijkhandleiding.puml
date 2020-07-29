@@ -18,8 +18,9 @@ hide namespace
 
 '' -------------------------------------------------------------------------------------------------
 
-'' hide <<Gestructureerd datatype>>
-'' hide <<Referentielijst>>
+hide <<Gestructureerd datatype>>
+hide <<Referentielijst>>
+hide Snippet
 
 skinparam wrapWidth 250
 
@@ -171,13 +172,15 @@ class Snippet <<Objecttype>> {
     Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
 }
 
-Template "*" --> "+ title\n*" Snippet
+Template "*" ..> "+ title\n*" Snippet
 
-Document "*" --> "+ title\n*" Snippet
+Layout "*" ..> "+ title\n*" Snippet
 
-Snippet "*" --> "+ title\n*" Snippet
+Document "*" ..> "+ title\n*" Snippet
 
-Collection "1" *-- "*" Snippet
+Snippet "*" ..> "+ title\n*" Snippet
+
+Collection "1" *.. "*" Snippet
 
 class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
