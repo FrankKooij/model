@@ -43,7 +43,6 @@ Tag "*" <--> "*" Document
 Tag "*"   -> "1" Collection
 Tag --|> Document
 
-Layout "*" --> "0..1" Collection
 Layout "*" --> "+ harvest\n0..1" Collection
 Layout "1" --> "+ filter\n0..1" Collection
 Layout "*" --> "+ layout\n0..1" Layout
@@ -73,8 +72,7 @@ class Collection <<Objecttype>> {
     + useAsTags: Boolean [1..1]
     --definition--
     Set of documents that describe similar concepts
-    --constraints--
-    + label uniquely identifies each collection
+''    --constraints--
 ''    --nederlands--
 ''    + alias
 ''    + datums
@@ -86,6 +84,7 @@ class Collection <<Objecttype>> {
 
 class Document <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
+''    + collection {classifier}
     + content: CharacterString [1..1]
     + date: Date [0..1]
     + description: CharacterString [0..1]
@@ -98,7 +97,7 @@ class Document <<Objecttype>> {
     The text for the body of a page with its metadata
 ''  De romptekst van de pagina met metagegevens
     --constraints--
-    + title uniquely identifies each document within a collection
+    + title must be unique within the collection
     + sortCode for the collection index must be either unique or empty for all documents in the collection
     + a document should not tag itself
     + subDocCollection is required if a document is the parent of subdocuments
@@ -129,6 +128,7 @@ class Layout <<Objecttype>> {
     + non-default layouts must link to a layout
     + the base default layout must not link to any layout
     + a layout must not link to itself
+    + a filter relation requires also a harvest relation
     --encoding--
     HTML with Liquid and YAML front matter
 }
@@ -143,7 +143,6 @@ class IndexLayout <<Objecttype>> {
     --definition--
     Layout for the index page of a root collection
     --constraints--
-    + title uniquely identifies each template
     + sortCode for site menu must be unique
 ''    --nederlands--
 ''    + mermaid
@@ -161,8 +160,7 @@ class Snippet <<Objecttype>> {
     --definition--
     Text snippet with its metadata
 ''  Tekstfragmenten met metagegevens
-    --constraints--
-    + title uniquely identifies each snippet
+''    --constraints--
 ''    --nederlands--
 ''    + title
     --encoding--
