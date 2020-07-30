@@ -12,9 +12,9 @@ hide namespace
 skinparam wrapWidth 250
 
 '' hide Site
-'' hide Snippet
-'' hide <<Gestructureerd datatype>>
-'' hide <<Referentielijst>>
+hide Snippet
+hide <<Gestructureerd datatype>>
+hide <<Referentielijst>>
 
 '' =================================================================================================
 
