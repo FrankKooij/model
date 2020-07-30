@@ -121,7 +121,8 @@ abstract class Tag <<Objecttype>> {
 }
 
 class Layout <<Objecttype>> {
-    + script
+    + fileName [1..1] {classifier}
+    + script [1..1]
     --definition--
     Content template for the body of a page
     --constraints--
