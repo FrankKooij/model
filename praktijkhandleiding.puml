@@ -1,6 +1,25 @@
+'' PlantUML Class Diagram
+
 @startuml
 
-!include https://raw.githubusercontent.com/FrankKooij/model/master/opmaak.iuml
+skinparam defaultFontColor black
+skinparam defaultFontName Lucida Sans
+skinparam defaultFontSize 11
+skinparam defaultFontStyle normal
+skinparam shadowing false
+skinparam wrapWidth 250
+skinparam class {
+    ArrowColor #70a426
+    ArrowFontSize 10
+    ArrowThickness 1.5
+    AttributeIconSize 0
+    BackgroundColor #ffffff
+    BorderColor #007bc7
+    BorderThickness 2.5
+    FontColor #007bc7
+    FontSize 12
+    FontStyle bold
+}
 
 hide circle
 hide empty members
@@ -8,8 +27,6 @@ hide empty members
 '' hide methods
 hide namespace
 '' hide stereotype
-
-skinparam wrapWidth 250
 
 '' hide Site
 hide Snippet
