@@ -3,17 +3,10 @@
 !include https://raw.githubusercontent.com/FrankKooij/model/master/opmaak.iuml
 
 hide circle
-
 hide empty members
-
 '' hide stereotype
-
-hide <<enumeration>>
-
 '' hide attributes
-
 '' hide methods
-
 hide namespace
 
 '' -------------------------------------------------------------------------------------------------
