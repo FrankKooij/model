@@ -4,19 +4,17 @@
 
 hide circle
 hide empty members
-'' hide stereotype
 '' hide attributes
 '' hide methods
 hide namespace
-
-'' -------------------------------------------------------------------------------------------------
-
-hide <<Gestructureerd datatype>>
-hide <<Referentielijst>>
-hide Snippet
-hide Site
+'' hide stereotype
 
 skinparam wrapWidth 250
+
+'' hide Site
+'' hide Snippet
+'' hide <<Gestructureerd datatype>>
+'' hide <<Referentielijst>>
 
 '' =================================================================================================
 
