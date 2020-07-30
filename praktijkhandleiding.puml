@@ -27,107 +27,61 @@ skinparam wrapWidth 250
 
 '' =================================================================================================
 
-'' title Conceptueel informatiemodel van de praktijkhandleiding
+title Conceptual information model for publishing linked data-specification details on the web using Jekyll as a static site generator
+
+Site "1" *-- "1..*" Collection
+Site "1" *-- "1..*" IndexLayout
+Site "1" *-- "1..*" Layout
 
 Collection "1" *-- "*" Document
-'' Tag "*\n+ collection\n+ title" <-- "*" Document
-'' Tag "+ label of\ncollection\n+ title\nof tag\n*" <-- "*" Document
-Document "*" <--> "*" Tag
-'' Tag "0..1" *-- "1" Document
-'' Tag "*" --> "1" Collection
+Collection "*" --> "+ origin\n0..1" Collection
+
+Document "*" --> "+ layout\n1" Layout
+Document "*" --> "+ subDocCollection\n0..1" Collection
+
+Tag "*" <--> "*" Document
+Tag "*"   -> "1" Collection
 Tag --|> Document
-Site "1" *-- "1..*" Collection
-Site "1" *-- "1..*" Template
-Site "1" *-- "1..*" Layout
-'' Site "1" .. "*" Document
+
+Layout "*" --> "0..1" Collection
+Layout "*" --> "+ harvest\n0..1" Collection
+Layout "1" --> "+ filter\n0..1" Collection
+Layout "*" --> "+ layout\n0..1" Layout
+
+IndexLayout --|> Layout
+IndexLayout "*" --> "+ layout\n1" Layout
+IndexLayout "0..1" --> "+ harvest\n1" Collection
+
+Collection  "1" *.. "*" Snippet
+Document    "*" ..> "*" Snippet
+IndexLayout "*" ..> "*" Snippet
+Layout      "*" ..> "*" Snippet
+Snippet     "*" ..> "*" Snippet
 
 abstract class Site <<Objecttype>> {
-''     + config: Config [1..1]
+    + baseURL: CharacterString [1..1] {classifier}
+    + license: CharacterString [1..1]
+    --definition--
 }
-
-'' class Config <<Gestructureerd datatype>> {
-''     --
-''     _config.yml
-'' }
 
 class Collection <<Objecttype>> {
     + label: CharacterString [1..1] {classifier}
     + alias: CharacterString [0..1]
-    + showDates: Boolean [1..1]
-''    + output: Boolean [1..1]
-    + useAsTags: Boolean [1..1]
     + includeInSearch: Boolean [1..1]
+    + showDates: Boolean [1..1]
+    + output: Boolean [1..1]
+    + useAsTags: Boolean [1..1]
+    --definition--
+    Set of documents that describe similar concepts
     --constraints--
     + label uniquely identifies each collection
 ''    --nederlands--
 ''    + alias
 ''    + datums
-''    + label (=naam van collection)
-''    + output (=wel of niet webpagina genereren voor documenten in collection)
+''    + label (=naam van collectie)
+''    + output (=wel of niet een pagina genereren voor de documenten in deze collectie)
 ''    + taglists
 ''    + zoeken
-    --definition--
-Set of documents that describe similar concepts
-}
-
-Collection "*" --> "+ origin\n0..1" Collection
-
-class Layout <<Objecttype>> {
-    + script
-    --definition--
-    Content structure that enhances the body of a page
-    --encoding--
-    HTML with Liquid and YAML front matter
-}
-
-class Default <<Objecttype>> {
-''     --definition--
-    Core content structure of the body of a page
-    --encoding--
-    HTML with Liquid
-}
-
-Document "*" --> "+ layout\n1" Layout
-
-Layout "*" --> "+ layout\n0..1" Layout
-
-Layout "*" --> "+ label of\ncollection\n\n0..1" Collection
-
-Collection "+ label\n0..1" <-- "*" Layout
-
-Collection "+ label to\nfilter by\n0..1" <-- "1" Layout
-
-Default "*" -- "0" Layout
-
-Default --|> Layout
-
-Template --|> Layout
-
-Template "*" --> "+ layout\n1" Layout
-
-Template "0..1" --> "+ scope\n1" Collection
-
-class Template <<Objecttype>> {
-    + title: CharacterString [1..1] {classifier}
-    + collectionSortOrder: SortOrder [1..1]
-    + hasDiagrams: Boolean [0..1]
-    + script
-    + siteMenu: Boolean [0..1]
-    + sortCode: CharacterString [1..1]
-    + showNoDateItems: Boolean [1..1]
-    --constraints--
-    + title uniquely identifies each template
-    + sortCode for site menu must be unique
-''    --nederlands--
-''    + mermaid
-''    + sorteercode
-''    + sorteren
-''    + title
-''    + weergevenalsdatumontbreekt
-    --definition--
-    Content structure of the overview page of a root collection
-    --encoding--
-    HTML with Liquid and YAML front matter
 }
 
 class Document <<Objecttype>> {
@@ -140,11 +94,14 @@ class Document <<Objecttype>> {
     + hasSubDocs: Boolean [0..1]
     + sortCode: CharacterString [0..1]
     + toc: TableOfContents [0..1]
+    --definition--
+    The text for the body of a page with its metadata
+''  De romptekst van de pagina met metagegevens
     --constraints--
     + title uniquely identifies each document within a collection
-    + sortCode for collection overview must be either unique or empty for all documents in the collection
+    + sortCode for the collection index must be either unique or empty for all documents in the collection
     + a document should not tag itself
-    + subDocCollection is required if a document has subdocuments
+    + subDocCollection is required if a document is the parent of subdocuments
     + all subdocuments to a document must be in the same collection
 ''    --nederlands--
 ''    + title
@@ -154,38 +111,62 @@ class Document <<Objecttype>> {
 ''    + mermaid
 ''    + sorteercode
 ''    + toc
-    --definition--
-    The text for the body of a page with its metadata
-''    De romptekst van de webpagina met metagegevens
     --encoding--
-    Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
+    Kramdown with YAML front matter (and sometimes Mermaid diagrams or Liquid or both)
 }
 
-Document "*" --> "+ subDocCollection\n0..1" Collection
+abstract class Tag <<Objecttype>> {
+    --definition--
+    Document in a taggable collection
+}
+
+class Layout <<Objecttype>> {
+    + script
+    --definition--
+    Content template for the body of a page
+    --constraints--
+    + non-default layouts must link to a layout
+    + the base default layout must not link to any layout
+    + a layout must not link to itself
+    --encoding--
+    HTML with Liquid and YAML front matter
+}
+
+class IndexLayout <<Objecttype>> {
+    + title: CharacterString [1..1] {classifier}
+    + collectionSortOrder: SortOrder [1..1]
+    + hasDiagrams: Boolean [0..1]
+    + siteMenu: Boolean [0..1]
+    + sortCode: CharacterString [1..1]
+    + showNoDateItems: Boolean [1..1]
+    --definition--
+    Layout for the index page of a root collection
+    --constraints--
+    + title uniquely identifies each template
+    + sortCode for site menu must be unique
+''    --nederlands--
+''    + mermaid
+''    + sorteercode
+''    + sorteren
+''    + title
+''    + weergevenalsdatumontbreekt
+''     --encoding--
+''     HTML with Liquid and YAML front matter
+}
 
 class Snippet <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + content: CharacterString [1..1]
+    --definition--
+    Text snippet with its metadata
+''  Tekstfragmenten met metagegevens
     --constraints--
     + title uniquely identifies each snippet
 ''    --nederlands--
 ''    + title
-    --definition--
-    Text snippet with its metadata
-'' Tekstfragmenten met metagegevens
     --encoding--
-    Kramdown with YAML front matter (and occasionally Mermaid diagrams or Liquid or both)
+    Kramdown with YAML front matter (and sometimes Mermaid diagrams or Liquid or both)
 }
-
-Template "*" ..> "+ title\n*" Snippet
-
-Layout "*" ..> "+ title\n*" Snippet
-
-Document "*" ..> "+ title\n*" Snippet
-
-Snippet "*" ..> "+ title\n*" Snippet
-
-Collection "1" *.. "*" Snippet
 
 class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
@@ -193,19 +174,6 @@ class TableOfContents <<Gestructureerd datatype>> {
     Selected exact quotations of content headings for a navigable table of contents in the sidebar
     --encoding--
     YAML sequence
-}
-
-'' TableOfContents "0..*" -- "1..*" Document::content
-
-'' abstract class TagCollection <<Objecttype>> {
-'' }
-
-'' TagCollection --|> Collection
-
-abstract class Tag <<Objecttype>> {
-''     + name [1..1]
-    --definition--
-    Document in a taggable collection
 }
 
 class SortOrder <<Referentielijst>> {
