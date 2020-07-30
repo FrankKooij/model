@@ -60,7 +60,10 @@ Snippet     "*" ..> "*" Snippet
 abstract class Site <<Objecttype>> {
     + baseURL: CharacterString [1..1] {classifier}
     + license: CharacterString [1..1]
-    --definition--
+''    --definition--
+''    --constraints--
+''    --nederlands--
+''    --encoding--
 }
 
 class Collection <<Objecttype>> {
@@ -80,6 +83,7 @@ class Collection <<Objecttype>> {
 ''    + output (=wel of niet een pagina genereren voor de documenten in deze collectie)
 ''    + taglists
 ''    + zoeken
+''    --encoding--
 }
 
 class Document <<Objecttype>> {
@@ -117,6 +121,9 @@ class Document <<Objecttype>> {
 abstract class Tag <<Objecttype>> {
     --definition--
     Document in a taggable collection
+''    --constraints--
+''    --nederlands--
+''    --encoding--
 }
 
 class Layout <<Objecttype>> {
@@ -129,6 +136,7 @@ class Layout <<Objecttype>> {
     + the base default layout must not link to any layout
     + a layout must not link to itself
     + a filter relation requires also a harvest relation
+''    --nederlands--
     --encoding--
     HTML with Liquid and YAML front matter
 }
@@ -150,8 +158,8 @@ class IndexLayout <<Objecttype>> {
 ''    + sorteren
 ''    + title
 ''    + weergevenalsdatumontbreekt
-''     --encoding--
-''     HTML with Liquid and YAML front matter
+''    --encoding--
+''    HTML with Liquid and YAML front matter
 }
 
 class Snippet <<Objecttype>> {
@@ -171,6 +179,8 @@ class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
     --definition--
     Selected exact quotations of content headings for a navigable table of contents in the sidebar
+''    --constraints--
+''    --nederlands--
     --encoding--
     YAML sequence
 }
@@ -185,6 +195,9 @@ class SortOrder <<Referentielijst>> {
 ''    + sorteercode
     --definition--
     Valid choices for the order in which a list of navigable links is presented
+''    --constraints--
+''    --nederlands--
+''    --encoding--
 }
 
 @enduml
