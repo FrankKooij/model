@@ -102,7 +102,6 @@ class Document <<Objecttype>> {
     + description: CharacterString [0..1]
     + editor: CharacterString [0..1]
     + hasDiagrams: Boolean [0..1]
-    + hasSubDocs: Boolean [0..1]
     + sortCode: CharacterString [0..1]
     + toc: TableOfContents [0..1]
     --definition--
@@ -136,7 +135,9 @@ abstract class Tag <<Objecttype>> {
 
 class Layout <<Objecttype>> {
     + fileName [1..1] {classifier}
-    + script [1..1]
+    + showSubDocs: Boolean [0..1]
+    --methods--
+    contentWrapper()
     --definition--
     Content template for the body of a page
     --constraints--
