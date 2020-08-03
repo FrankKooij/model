@@ -68,9 +68,9 @@ Snippet     "*" ..> "*" Snippet
 abstract class Site <<Objecttype>> {
     + baseURL: CharacterString [1..1] {classifier}
     + license: CharacterString [1..1]
+''    --methods--
 ''    --definition--
 ''    --constraints--
-''    --nederlands--
 ''    --encoding--
 }
 
@@ -81,16 +81,10 @@ class Collection <<Objecttype>> {
     + showDates: Boolean [1..1]
     + output: Boolean [1..1]
     + useAsTags: Boolean [1..1]
+''    --methods--
     --definition--
     Set of documents that describe similar concepts
 ''    --constraints--
-''    --nederlands--
-''    + alias
-''    + datums
-''    + label (=naam van collectie)
-''    + output (=wel of niet een pagina genereren voor de documenten in deze collectie)
-''    + taglists
-''    + zoeken
 ''    --encoding--
 }
 
@@ -104,32 +98,24 @@ class Document <<Objecttype>> {
     + hasDiagrams: Boolean [0..1]
     + sortCode: CharacterString [0..1]
     + toc: TableOfContents [0..1]
+''    --methods--
     --definition--
     The text for the body of a page with its metadata
-''  De romptekst van de pagina met metagegevens
     --constraints--
     + title must be unique within the collection
     + sortCode for the collection index must be either unique or empty for all documents in the collection
     + a document should not tag itself
     + subDocCollection is required if a document is the parent of subdocuments
     + all subdocuments to a document must be in the same collection
-''    --nederlands--
-''    + title
-''    + date
-''    + description
-''    + editor
-''    + mermaid
-''    + sorteercode
-''    + toc
     --encoding--
     Kramdown with YAML front matter (and sometimes Mermaid diagrams or Liquid or both)
 }
 
 abstract class Tag <<Objecttype>> {
+''    --methods--
     --definition--
     Document in a taggable collection
 ''    --constraints--
-''    --nederlands--
 ''    --encoding--
 }
 
@@ -145,7 +131,6 @@ class Layout <<Objecttype>> {
     + the base default layout must not link to any layout
     + a layout must not link to itself
     + a filter relation requires also a harvest relation
-''    --nederlands--
     --encoding--
     HTML with Liquid and YAML front matter
 }
@@ -157,16 +142,11 @@ class IndexLayout <<Objecttype>> {
     + siteMenu: Boolean [0..1]
     + sortCode: CharacterString [1..1]
     + showNoDateItems: Boolean [1..1]
+''    --methods--
     --definition--
     Layout for the index page of a root collection
     --constraints--
     + sortCode for site menu must be unique
-''    --nederlands--
-''    + mermaid
-''    + sorteercode
-''    + sorteren
-''    + title
-''    + weergevenalsdatumontbreekt
 ''    --encoding--
 ''    HTML with Liquid and YAML front matter
 }
@@ -174,22 +154,20 @@ class IndexLayout <<Objecttype>> {
 class Snippet <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
     + content: CharacterString [1..1]
+''    --methods--
     --definition--
     Text snippet with its metadata
-''  Tekstfragmenten met metagegevens
 ''    --constraints--
-''    --nederlands--
-''    + title
     --encoding--
     Kramdown with YAML front matter (and sometimes Mermaid diagrams or Liquid or both)
 }
 
 class TableOfContents <<Gestructureerd datatype>> {
     + heading: CharacterString [1..*]
+''    --methods--
     --definition--
     Selected exact quotations of content headings for a navigable table of contents in the sidebar
 ''    --constraints--
-''    --nederlands--
     --encoding--
     YAML sequence
 }
@@ -198,14 +176,10 @@ class SortOrder <<Referentielijst>> {
     + alphabetical
     + chronological
     + sortCode
-''    --nederlands--
-''    + alfabetisch
-''    + chronologisch
-''    + sorteercode
+''    --methods--
     --definition--
     Valid choices for the order in which a list of navigable links is presented
 ''    --constraints--
-''    --nederlands--
 ''    --encoding--
 }
 
