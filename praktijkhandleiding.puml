@@ -38,30 +38,36 @@ hide <<Referentielijst>>
 title Conceptual information model for publishing linked data-specification details on the web using Jekyll as a static site generator
 
 Site "1" *-- "1..*" Collection
-Site "1" *-- "1..*" IndexLayout
+Site "1" *-- "1..*" Overview
+Site "1" *-- "*"    Sequence
 Site "1" *-- "1..*" Layout
 
-Collection "1" *-- "*" Document
 Collection "*" --> "+ origin\n0..1" Collection
+Collection "1" *-- "*" Article
+Collection "1" *-- "*" Sequence
 
-Document "*" --> "+ layout\n1" Layout
-Document "*" --> "+ subDocCollection\n0..1" Collection
+Article "*" --> "+ subArticleCollection\n0..1" Collection
+Article "*" -> "+ layout\n1" Layout
+'' Jekyll expects a layout variable in the front matter of each page
 
-Tag "*" <--> "*" Document
-Tag "*"   -> "1" Collection
-Tag --|> Document
+Tag "*"   -> "+ parent\n1" Collection
+Tag --|> Article
+Tag "*" <--> "*" Article
+
+Overview "0..1" -> "+ harvest\n1" Collection
+Overview "*" --> "+ layout\n1" Layout
+
+Sequence "*" --> "+ harvest\n*" Collection
+Sequence "*" --> "+ member\n*" Article
+Sequence "*" --> "+ layout\n1" Layout
 
 Layout "*" --> "+ harvest\n0..1" Collection
 Layout "1" --> "+ filter\n0..1" Collection
 Layout "*" --> "+ layout\n0..1" Layout
 
-IndexLayout --|> Layout
-IndexLayout "*" --> "+ layout\n1" Layout
-IndexLayout "0..1" --> "+ harvest\n1" Collection
-
 Collection  "1" *.. "*" Snippet
-Document    "*" ..> "*" Snippet
-IndexLayout "*" ..> "*" Snippet
+Article    "*" ..> "*" Snippet
+Overview "*" ..> "*" Snippet
 Layout      "*" ..> "*" Snippet
 Snippet     "*" ..> "*" Snippet
 
@@ -83,12 +89,12 @@ class Collection <<Objecttype>> {
     + useAsTags: Boolean [1..1]
 ''    --methods--
     --definition--
-    Set of documents that describe similar concepts
+    Set of articles that describe similar concepts
 ''    --constraints--
 ''    --encoding--
 }
 
-class Document <<Objecttype>> {
+class Article <<Objecttype>> {
     + title: CharacterString [1..1] {classifier}
 ''    + collection {classifier}
     + content: CharacterString [1..1]
@@ -100,13 +106,13 @@ class Document <<Objecttype>> {
     + toc: TableOfContents [0..1]
 ''    --methods--
     --definition--
-    The text for the body of a page with its metadata
+    A self-contained unit of discourse with its metadata
     --constraints--
     + title must be unique within the collection
-    + sortCode for the collection index must be either unique or empty for all documents in the collection
-    + a document should not tag itself
-    + subDocCollection is required if a document is the parent of subdocuments
-    + all subdocuments to a document must be in the same collection
+    + sortCode for the collection index must be either unique or empty for all articles in the collection
+    + an article should not tag itself
+    + subArticleCollection is required if an article is the parent of subarticles
+    + all subarticles to an article must be in the same collection
     --encoding--
     Kramdown with YAML front matter (and sometimes Mermaid diagrams or Liquid or both)
 }
@@ -114,18 +120,47 @@ class Document <<Objecttype>> {
 abstract class Tag <<Objecttype>> {
 ''    --methods--
     --definition--
-    Document in a taggable collection
+    Article in a taggable collection
+''    --constraints--
+''    --encoding--
+}
+
+class Overview <<Objecttype>> {
+    + fileName [1..1] {classifier}
+    + collectionSortOrder: SortOrder [1..1]
+    + hasDiagrams: Boolean [0..1]
+    + siteMenu: Boolean [0..1]
+    + sortCode: CharacterString [1..1]
+    + showNoDateItems: Boolean [1..1]
+    + title: CharacterString [1..1]
+    --methods--
+    contentWrapper()
+    --definition--
+    Template for the overview page of a root collection
+    --constraints--
+    + sortCode for the site menu must be unique
+    --encoding--
+    HTML with Liquid and YAML front matter
+}
+
+class Sequence <<Objecttype>> {
+    + title: CharacterString [1..1] {classifier}
+''    + sortCode: CharacterString [1..1]
+    + sequenceMembers: SequenceTable[1..1]
+''    --methods--
+    --definition--
+    Ordered set of related articles
 ''    --constraints--
 ''    --encoding--
 }
 
 class Layout <<Objecttype>> {
     + fileName [1..1] {classifier}
-    + showSubDocs: Boolean [0..1]
+    + showSubArticles: Boolean [0..1]
     --methods--
     contentWrapper()
     --definition--
-    Content template for the body of a page
+    Template for the body of a page
     --constraints--
     + non-default layouts must link to a layout
     + the base default layout must not link to any layout
@@ -133,22 +168,6 @@ class Layout <<Objecttype>> {
     + a filter relation requires also a harvest relation
     --encoding--
     HTML with Liquid and YAML front matter
-}
-
-class IndexLayout <<Objecttype>> {
-    + title: CharacterString [1..1] {classifier}
-    + collectionSortOrder: SortOrder [1..1]
-    + hasDiagrams: Boolean [0..1]
-    + siteMenu: Boolean [0..1]
-    + sortCode: CharacterString [1..1]
-    + showNoDateItems: Boolean [1..1]
-''    --methods--
-    --definition--
-    Layout for the index page of a root collection
-    --constraints--
-    + sortCode for the site menu must be unique
-''    --encoding--
-''    HTML with Liquid and YAML front matter
 }
 
 class Snippet <<Objecttype>> {
@@ -167,6 +186,16 @@ class TableOfContents <<Gestructureerd datatype>> {
 ''    --methods--
     --definition--
     Selected exact quotations of content headings for a navigable table of contents in the sidebar
+''    --constraints--
+    --encoding--
+    YAML sequence
+}
+
+class SequenceTable <<Gestructureerd datatype>> {
+    + title: CharacterString [1..*]
+''    --methods--
+    --definition--
+    Selected exact quotations of related articles titles in their preferred reading order
 ''    --constraints--
     --encoding--
     YAML sequence
