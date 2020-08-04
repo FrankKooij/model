@@ -146,7 +146,7 @@ class IndexLayout <<Objecttype>> {
     --definition--
     Layout for the index page of a root collection
     --constraints--
-    + sortCode for site menu must be unique
+    + sortCode for the site menu must be unique
 ''    --encoding--
 ''    HTML with Liquid and YAML front matter
 }
