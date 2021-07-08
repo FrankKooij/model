@@ -70,10 +70,10 @@
 '' --------^-^-^-^-^-^-^-^--------
 
 skinparam defaultFontColor black
-skinparam defaultFontName Lucida Sans
+skinparam defaultFontName Lucida Sans, Lucida Grande
 skinparam defaultFontSize 11
 skinparam defaultFontStyle normal
-skinparam defaultMonospacedFontName Lucida Sans Typewriter
+skinparam defaultMonospacedFontName Lucida Sans Typewriter, Menlo
 '' skinparam defaultTextAlignment left
 '' skinparam lineType ortho
 '' skinparam lineType polyline
