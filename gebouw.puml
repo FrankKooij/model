@@ -1,0 +1,73 @@
+@startuml
+
+!include https://raw.githubusercontent.com/FrankKooij/model/master/opmaak.iuml
+
+hide circle
+
+hide empty members
+
+hide stereotype
+
+hide <<enumeration>>
+
+'' hide attributes
+
+hide methods
+
+hide namespace
+
+'' -------------------------------------------------------------------------------------------------
+
+'' hide AbstractObject
+
+'' =================================================================================================
+
+'' title Concept-BMGI
+
+namespace NEN3610 {
+
+''     note "obv discussie van 26 mei 2021" as versie
+
+    Constructie <|-- Gebouw
+    Constructie <|-- Kunstwerk
+
+    abstract class Constructie <<Objecttype>> {
+    }
+
+    abstract class Gebouw <<Objecttype>> {
+    }
+
+    abstract class Kunstwerk <<Objecttype>> {
+    }
+
+}
+
+namespace gebouwendomein {
+
+    class Gebouw <<Objecttype>> {
+    }
+
+    class Gebouwdeel <<Objecttype>> {
+    }
+
+    NEN3610.Gebouw <|-- Gebouw
+    NEN3610.Constructie <|-- Gebouwdeel
+    Gebouw *- Gebouwdeel
+
+}
+
+namespace kunstwerkendomein {
+
+    class Kunstwerkdeel <<Objecttype>> {
+    }
+
+    class Kunstwerk <<Objecttype>> {
+    }
+
+    NEN3610.Kunstwerk <|-- Kunstwerk
+    NEN3610.Constructie <|-- Kunstwerkdeel
+    Kunstwerk *- Kunstwerkdeel
+
+}
+
+@enduml
