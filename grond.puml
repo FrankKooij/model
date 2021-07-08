@@ -1,0 +1,52 @@
+@startuml
+
+!include https://raw.githubusercontent.com/FrankKooij/model/master/opmaak.iuml
+
+hide circle
+
+hide empty members
+
+hide stereotype
+
+hide <<enumeration>>
+
+'' hide attributes
+
+hide methods
+
+hide namespace
+
+'' -------------------------------------------------------------------------------------------------
+
+'' hide AbstractObject
+
+'' =================================================================================================
+
+'' title Concept-BMGI
+
+namespace NEN3610 {
+
+''     note "obv discussie van 26 mei 2021" as versie
+
+    Aarde <|-- Bodem
+    Aarde <|-- Aardoppervlak
+    Aarde <|-- Ondergrond
+
+    abstract class Aarde <<Objecttype>> {
+    }
+
+    abstract class Bodem <<Objecttype>> {
+        Het gedeelte van de Aarde dat door planten beworteld wordt of waarin zich bodemvormende processen afspelen.
+    }
+
+    abstract class Ondergrond <<Objecttype>> {
+        Alle objecten onder het Aardoppervlak die deel uit maken van de geologie en hydrologie.
+    }
+
+    abstract class Aardoppervlak <<Objecttype>> {
+        Het scheidingsvlak tussen de Aarde en de atmosfeer.
+    }
+
+}
+
+@enduml
