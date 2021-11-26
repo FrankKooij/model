@@ -73,10 +73,10 @@
 skinparam dpi 300
 
 skinparam defaultFontColor black
-skinparam defaultFontName DejaVu Sans
+skinparam defaultFontName Lucida Grande, DejaVu Sans
 skinparam defaultFontSize 11
 skinparam defaultFontStyle normal
-skinparam defaultMonospacedFontName Monospaced
+skinparam defaultMonospacedFontName Menlo, Monospaced
 '' skinparam defaultTextAlignment left
 '' skinparam lineType ortho
 '' skinparam lineType polyline
