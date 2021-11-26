@@ -73,10 +73,10 @@
 skinparam dpi 300
 
 skinparam defaultFontColor black
-skinparam defaultFontName Lucida Grande, Lucida Sans
+skinparam defaultFontName DejaVu Sans
 skinparam defaultFontSize 11
 skinparam defaultFontStyle normal
-skinparam defaultMonospacedFontName Menlo, Lucida Sans Typewriter
+skinparam defaultMonospacedFontName Monospaced
 '' skinparam defaultTextAlignment left
 '' skinparam lineType ortho
 '' skinparam lineType polyline
